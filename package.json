@@ -1,0 +1,26 @@
+{
+  "name": "co2-calculator-research-phase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morgana54/co2-calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/morgana54/co2-calculator/issues"
+  },
+  "homepage": "https://github.com/morgana54/co2-calculator#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
+}
