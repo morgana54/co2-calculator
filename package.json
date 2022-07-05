@@ -17,6 +17,10 @@
     "url": "https://github.com/morgana54/co2-calculator/issues"
   },
   "homepage": "https://github.com/morgana54/co2-calculator#readme",
+  "dependencies": {
+    "@types/d3": "^7.4.0",
+    "d3": "^7.6.1"
+  },
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.7.1",
