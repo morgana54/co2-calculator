@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>CO2 Calculator</title>
   </head>
   <body></body>
@@ -11,8 +12,22 @@
 
 <html>
   <body>
-    <input type="range" id="netflix" />
-    <input type="range" id="spotify" />
+    <div id="sliders-container">
+      <input type="range" id="rozmowa_przez_telefon" />
+      <input type="range" id="komunikatory" />
+      <input type="range" id="gry" />
+      <input type="range" id="instagram" />
+      <input type="range" id="facebook" />
+      <input type="range" id="tiktok" />
+      <input type="range" id="netflix" />
+      <input type="range" id="youtube" />
+      <input type="range" id="spotify" />
+      <input type="range" id="przegladarka" />
+    </div>
+
+    <button id="count-btn">Oblicz</button>
+
+    <div id="bubble-chart-container"></div>
 
     <script type="text/javascript" src="init.ts"></script>
   </body>

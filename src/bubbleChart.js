@@ -133,9 +133,9 @@ export const renderGraph = (files) => {
         /\./g,
         "/"
       )}.as`,
-    width: 452,
-    height: 452,
+    width: 852,
+    height: 752,
   });
 
-  document.body.appendChild(chart);
+  document.getElementById("bubble-chart-container").appendChild(chart);
 };

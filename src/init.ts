@@ -1,14 +1,32 @@
 import { renderGraph } from "./bubbleChart.js";
 
 // get to constants
-const SLIDERS_IDS = ["netflix", "spotify"] as const;
+const SLIDERS_IDS = [
+  "rozmowa_przez_telefon",
+  "komunikatory",
+  "gry",
+  "instagram",
+  "tiktok",
+  "youtube",
+  "spotify",
+  "przegladarka",
+] as const;
 
 type TSliderId = typeof SLIDERS_IDS[number];
 
-// Application state (POTEM TS polepszyć)
+// DAĆ DO DOBREGO CONSTA CZY ENUMA WSZYSTKO też JAK JUŻ BUDUJESZ COREowa funckjonlanosc
+
+// Application state (POTEM TS polepszyć i może jakoś sensowniej zgrać z SLIDERS_IDS
 const slidersValues = {
-  netflix: 0,
-  spotify: 0,
+  // dać jakieś sensowne initial values żeby na pierwszy click bez zmiany też charty się wygenerowały
+  rozmowa_przez_telefon: 20,
+  komunikatory: 20,
+  gry: 20,
+  instagram: 20,
+  tiktok: 20,
+  youtube: 20,
+  spotify: 20,
+  przegladarka: 20,
 };
 
 // JUŻ MASZ BIEŻACE WARTOŚCI INPUTOW W STANIE
@@ -38,10 +56,6 @@ const calculateBubblesData = () => {
   return files;
 };
 
-// const renderGraph = (files) => {
-
-// }
-
 // currying
 const handleSliderChange = (sliderId: TSliderId) => (event: Event) => {
   const newValue = (event.target as HTMLInputElement).value;
@@ -50,9 +64,7 @@ const handleSliderChange = (sliderId: TSliderId) => (event: Event) => {
 
   slidersValues[sliderId] = newValue as unknown as number;
 
-  console.log(calculateBubblesData());
-
-  renderGraph(calculateBubblesData());
+  // console.log(calculateBubblesData());
 };
 
 // wziac to do osobnego pliku ładnie potem
@@ -69,3 +81,7 @@ const $sliders = SLIDERS_IDS.map((sliderId) => {
     return $slider as HTMLInputElement;
   }
 });
+
+document
+  .getElementById("count-btn")
+  ?.addEventListener("click", () => renderGraph(calculateBubblesData()));
