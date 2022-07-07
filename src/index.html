@@ -13,16 +13,115 @@
 <html>
   <body>
     <div id="sliders-container">
-      <input type="range" id="rozmowa_przez_telefon" />
-      <input type="range" id="komunikatory" />
-      <input type="range" id="gry" />
-      <input type="range" id="instagram" />
-      <input type="range" id="facebook" />
-      <input type="range" id="tiktok" />
-      <input type="range" id="netflix" />
-      <input type="range" id="youtube" />
-      <input type="range" id="spotify" />
-      <input type="range" id="przegladarka" />
+      <!-- 1440 = 24 * 60 - tyle jest minut w dobie -->
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="rozmowa_przez_telefon-tooltip">
+          0 min
+        </div>
+        <input
+          type="range"
+          id="rozmowa_przez_telefon"
+          class="slider"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="komunikatory-tooltip">0 min</div>
+        <input
+          type="range"
+          id="komunikatory"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="gry-tooltip">0 min</div>
+        <input type="range" id="gry" min="0" max="1440" step="5" value="0" />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="instagram-tooltip">0 min</div>
+        <input
+          type="range"
+          id="instagram"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="facebook-tooltip">0 min</div>
+        <input
+          type="range"
+          id="facebook"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="tiktok-tooltip">0 min</div>
+        <input type="range" id="tiktok" min="0" max="1440" step="5" value="0" />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="netflix-tooltip">0 min</div>
+        <input
+          type="range"
+          id="netflix"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="youtube-tooltip">0 min</div>
+        <input
+          type="range"
+          id="youtube"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="spotify-tooltip">0 min</div>
+        <input
+          type="range"
+          id="spotify"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-tooltip" id="przegladarka-tooltip">0 min</div>
+        <input
+          type="range"
+          id="przegladarka"
+          min="0"
+          max="1440"
+          step="5"
+          value="0"
+        />
+      </div>
     </div>
 
     <button id="count-btn">Oblicz</button>

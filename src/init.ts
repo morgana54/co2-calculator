@@ -1,4 +1,5 @@
 import { renderGraph } from "./bubbleChart.js";
+import { setTooltipPositionAndValue } from "./utils.ts";
 
 // get to constants
 const SLIDERS_IDS = [
@@ -10,28 +11,26 @@ const SLIDERS_IDS = [
   "youtube",
   "spotify",
   "przegladarka",
+  "netflix",
+  "facebook",
 ] as const;
 
 type TSliderId = typeof SLIDERS_IDS[number];
 
-// DAĆ DO DOBREGO CONSTA CZY ENUMA WSZYSTKO też JAK JUŻ BUDUJESZ COREowa funckjonlanosc
-
 // Application state (POTEM TS polepszyć i może jakoś sensowniej zgrać z SLIDERS_IDS
 const slidersValues = {
-  // dać jakieś sensowne initial values żeby na pierwszy click bez zmiany też charty się wygenerowały
-  rozmowa_przez_telefon: 20,
-  komunikatory: 20,
-  gry: 20,
-  instagram: 20,
-  tiktok: 20,
-  youtube: 20,
-  spotify: 20,
-  przegladarka: 20,
+  // dać maybe jakieś sensowne initial values żeby na pierwszy click bez zmiany też charty się wygenerowały
+  rozmowa_przez_telefon: 0,
+  komunikatory: 0,
+  gry: 0,
+  instagram: 0,
+  tiktok: 0,
+  youtube: 0,
+  spotify: 0,
+  przegladarka: 0,
+  netflix: 0,
+  facebook: 0,
 };
-
-// JUŻ MASZ BIEŻACE WARTOŚCI INPUTOW W STANIE
-
-// TERAZ: wyświetlenie wartości inputow w kolkach
 
 // skmiń dobrą nazwę!!
 const getFile = (id: string, sliderValue: number) => {
@@ -64,20 +63,19 @@ const handleSliderChange = (sliderId: TSliderId) => (event: Event) => {
 
   slidersValues[sliderId] = newValue as unknown as number;
 
-  // console.log(calculateBubblesData());
+  setTooltipPositionAndValue(sliderId);
 };
-
-// wziac to do osobnego pliku ładnie potem
 
 // najpierw zrob to mapem a potem reducem jak Kacper
 
+// Add event listeners to sliders
 const $sliders = SLIDERS_IDS.map((sliderId) => {
   const $slider = document.getElementById(sliderId);
 
   console.log($slider);
 
   if ($slider) {
-    $slider?.addEventListener("change", handleSliderChange(sliderId));
+    $slider?.addEventListener("input", handleSliderChange(sliderId));
     return $slider as HTMLInputElement;
   }
 });

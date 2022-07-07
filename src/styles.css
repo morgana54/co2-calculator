@@ -1,9 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
 input[type="range"] {
   outline: none;
   background: #d9d9d9;
   -webkit-appearance: none;
   height: 7px;
   margin-top: 20px;
+  width: 100%;
 }
 
 /* Below logic cannot be combined with commas. See for reference: https://css-tricks.com/sliding-nightmare-understanding-range-input/ */
@@ -64,4 +69,28 @@ input[type="range"]::-ms-thumb:active {
   flex-direction: column;
   padding: 104px 155px 114px 120px;
   /* ustawisz potem jakieś max width i center żeby na dużych ekranach dobrze tez wyglądało */
+}
+
+.slider-wrapper {
+  position: relative;
+  margin-top: 40px;
+}
+
+.slider-tooltip {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 25px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  text-align: center;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 150%;
+  background: white;
+  padding-top: 2px;
 }
