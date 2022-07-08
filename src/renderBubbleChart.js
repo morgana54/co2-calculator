@@ -23,7 +23,7 @@ function BubbleChart(
     marginBottom = margin, // bottom margin, in pixels
     marginLeft = margin, // left margin, in pixels
     groups, // array of group names (the domain of the color scale)
-    colors = d3.schemeTableau10, // an array of colors (for groups)
+    colors, // an array of colors (for groups)
     fill = "#ccc", // a static fill color, if no group channel is specified
     fillOpacity = 0.7, // the fill opacity of the bubbles
     stroke, // a static stroke around the bubbles
@@ -42,6 +42,7 @@ function BubbleChart(
   groups = G && new d3.InternSet(groups);
 
   // Construct scales.
+  // TUTAJ MODYFIKUJESZ TAK ŻEBY KOLOR MOŻNA BYŁO ŁATWO PODAĆ
   const color = G && d3.scaleOrdinal(groups, colors);
 
   // Compute labels and titles.
@@ -77,14 +78,24 @@ function BubbleChart(
     .attr("target", link == null ? null : linkTarget)
     .attr("transform", (d) => `translate(${d.x},${d.y})`);
 
+  // tutaj są style każdego z kołek
   leaf
     .append("circle")
     .attr("stroke", stroke)
     .attr("stroke-width", strokeWidth)
     .attr("stroke-opacity", strokeOpacity)
-    .attr("fill", G ? (d) => color(G[d.data]) : fill == null ? "none" : fill)
+    .attr("fill", (_, circleIndex) => {
+      // ESSSA KOLOR
+      return D[circleIndex].circleColor;
+    })
     .attr("fill-opacity", fillOpacity)
-    .attr("r", (d) => d.r);
+    .attr("r", (d) => {
+      console.log(d);
+      return d.r;
+    });
+
+  // usunięte
+  // .attr("fill", G ? (d) => color(G[d.data]) : fill == null ? "none" : fill)
 
   if (T) leaf.append("title").text((d) => T[d.data]);
 
@@ -104,6 +115,7 @@ function BubbleChart(
         "clip-path",
         (d) => `url(${new URL(`#${uid}-clip-${d.data}`, location)})`
       )
+      // TUTAJ MASZ TSPAN
       .selectAll("tspan")
       .data((d) => `${L[d.data]}`.split(/\n/g))
       .join("tspan")
@@ -116,18 +128,18 @@ function BubbleChart(
   return Object.assign(svg.node(), { scales: { color } });
 }
 
-const getFile = (id, sliderValue) => {
+const getFile = (id, sliderValue, circleColor) => {
   // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
   // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
-  return { id: id, value: sliderValue };
+  return { id: id, value: sliderValue, circleColor };
 };
 
 const calculateBubblesDataAKAgetFiles = () => {
   const files = [];
-  slidersData.forEach(({ id, sliderValue }) => {
+  slidersData.forEach(({ id, sliderValue, circleColor }) => {
     // Do not add zeroes
     if (sliderValue) {
-      files.push(getFile(id, sliderValue));
+      files.push(getFile(id, sliderValue, circleColor));
     }
   });
 
@@ -147,15 +159,11 @@ export const renderBubbleChart = () => {
           .pop()
           .split(/(?=[A-Z][a-z])/g),
         d.value.toLocaleString("en"),
-      ].join("\n"),
+      ]
+        .join("\n")
+        .concat(" g"),
     value: (d) => d.value,
-    group: (d) => d.id.split(".")[1],
     title: (d) => `${d.id}\n${d.value.toLocaleString("en")}`,
-    link: (d) =>
-      `https://github.com/prefuse/Flare/blob/master/flare/src/${d.id.replace(
-        /\./g,
-        "/"
-      )}.as`,
     width: 852,
     height: 752,
   });

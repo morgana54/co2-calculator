@@ -7,8 +7,6 @@ export const slidersData = [
     // dać maybe jakieś sensowne initial values żeby na pierwszy click bez zmiany też charty się wygenerowały
     sliderValue: 0,
     gramsProducedPerHour: 0.586285714,
-    // z tego jakoś będziesz musiał uzyskać circleValue i dopisywać "g" jak na designie
-    // może po PROSTU GDZIEŚ W FUNKCJI BUBBLE CHART ZNAJDZIESZ MIEJSCE W KTORYM MOZESZ ZAWSZE SCONCATOWAC "G" DO VALUE i essa
     getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
@@ -33,7 +31,7 @@ export const slidersData = [
     getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
-    circleColor: "#9747FF",
+    circleColor: "#FF7F00",
     circleTitle: "Rozmowa",
   },
   {
