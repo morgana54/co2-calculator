@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { slidersData } from "./slidersData";
 
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
@@ -115,7 +116,34 @@ function BubbleChart(
   return Object.assign(svg.node(), { scales: { color } });
 }
 
-export const renderGraph = (files) => {
+const getFile = (id, sliderValue) => {
+  // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
+  // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
+  return { id: id, value: sliderValue };
+};
+
+const calculateBubblesData = () => {
+  // tutaj na podstawie stanu slidersValues STWORZYSZ PLIK FILES
+
+  // nazwa do zmiany
+  const files = [];
+
+  // SLIDERS VALUES MUSI BYĆ ACCESSIBLE GLOBALLY Z OBIEKTU I ESSA
+
+  slidersData.forEach(({ id, sliderValue }) => {
+    files.push(getFile(id, sliderValue));
+  });
+
+  // tutaj iterujemy po arrayce slidersData i wtedy otrzymujemy obiekt z ktorego propertiesami mozemy wszystko sobie robic, sparsowac go funkcja getFile i ESSA
+
+  return files;
+};
+
+export const renderBubbleChart = () => {
+  const files = calculateBubblesData();
+
+  console.log(slidersData[0].getCalulatedCo2Value());
+
   const chart = BubbleChart(files, {
     label: (d) =>
       [
@@ -137,5 +165,6 @@ export const renderGraph = (files) => {
     height: 752,
   });
 
+  // TO DO ZMIANY - ma być podmieniane a nie appendowane
   document.getElementById("bubble-chart-container").appendChild(chart);
 };

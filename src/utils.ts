@@ -1,3 +1,8 @@
+export const calculateCo2Value = (
+  minutes: number,
+  gramsProducedPerHour: number
+) => (gramsProducedPerHour / 60) * minutes;
+
 // This functions gets direct input range value
 export const timeConvertA = (minutes: number) => {
   var hours = minutes / 60;
