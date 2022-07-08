@@ -139,10 +139,10 @@ const calculateBubblesData = () => {
   return files;
 };
 
+let isFirstChartRender = true;
+
 export const renderBubbleChart = () => {
   const files = calculateBubblesData();
-
-  console.log(slidersData[0].getCalulatedCo2Value());
 
   const chart = BubbleChart(files, {
     label: (d) =>
@@ -165,6 +165,18 @@ export const renderBubbleChart = () => {
     height: 752,
   });
 
-  // TO DO ZMIANY - ma być podmieniane a nie appendowane
-  document.getElementById("bubble-chart-container").appendChild(chart);
+  console.log("isFirstChartRender", isFirstChartRender);
+
+  if (isFirstChartRender) {
+    isFirstChartRender = false;
+    document.getElementById("bubble-chart-container").appendChild(chart);
+  } else {
+    const previousBubbleChart = document.getElementById(
+      "bubble-chart-container"
+    ).childNodes[0];
+
+    document
+      .getElementById("bubble-chart-container")
+      .replaceChild(chart, previousBubbleChart);
+  }
 };
