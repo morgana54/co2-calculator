@@ -122,19 +122,14 @@ const getFile = (id, sliderValue) => {
   return { id: id, value: sliderValue };
 };
 
-const calculateBubblesData = () => {
-  // tutaj na podstawie stanu slidersValues STWORZYSZ PLIK FILES
-
-  // nazwa do zmiany
+const calculateBubblesDataAKAgetFiles = () => {
   const files = [];
-
-  // SLIDERS VALUES MUSI BYĆ ACCESSIBLE GLOBALLY Z OBIEKTU I ESSA
-
   slidersData.forEach(({ id, sliderValue }) => {
-    files.push(getFile(id, sliderValue));
+    // Do not add zeroes
+    if (sliderValue) {
+      files.push(getFile(id, sliderValue));
+    }
   });
-
-  // tutaj iterujemy po arrayce slidersData i wtedy otrzymujemy obiekt z ktorego propertiesami mozemy wszystko sobie robic, sparsowac go funkcja getFile i ESSA
 
   return files;
 };
@@ -142,7 +137,7 @@ const calculateBubblesData = () => {
 let isFirstChartRender = true;
 
 export const renderBubbleChart = () => {
-  const files = calculateBubblesData();
+  const files = calculateBubblesDataAKAgetFiles();
 
   const chart = BubbleChart(files, {
     label: (d) =>
@@ -164,8 +159,6 @@ export const renderBubbleChart = () => {
     width: 852,
     height: 752,
   });
-
-  console.log("isFirstChartRender", isFirstChartRender);
 
   if (isFirstChartRender) {
     isFirstChartRender = false;

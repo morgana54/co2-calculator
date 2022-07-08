@@ -9,7 +9,7 @@ export const slidersData = [
     gramsProducedPerHour: 0.586285714,
     // z tego jakoś będziesz musiał uzyskać circleValue i dopisywać "g" jak na designie
     // może po PROSTU GDZIEŚ W FUNKCJI BUBBLE CHART ZNAJDZIESZ MIEJSCE W KTORYM MOZESZ ZAWSZE SCONCATOWAC "G" DO VALUE i essa
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#9747FF",
@@ -20,7 +20,7 @@ export const slidersData = [
     id: "komunikatory",
     sliderValue: 0,
     gramsProducedPerHour: 1.788512571,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#00CCFF",
@@ -30,7 +30,7 @@ export const slidersData = [
     id: "gry",
     sliderValue: 0,
     gramsProducedPerHour: 7.525947086,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#9747FF",
@@ -40,7 +40,7 @@ export const slidersData = [
     id: "instagram",
     sliderValue: 0,
     gramsProducedPerHour: 36.527292,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#FF5176",
@@ -50,7 +50,7 @@ export const slidersData = [
     id: "tiktok",
     sliderValue: 0,
     gramsProducedPerHour: 288.6639806,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#000000",
@@ -60,7 +60,7 @@ export const slidersData = [
     id: "youtube",
     sliderValue: 0,
     gramsProducedPerHour: 53.52104229,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#FF2424",
@@ -70,7 +70,7 @@ export const slidersData = [
     id: "spotify",
     sliderValue: 0,
     gramsProducedPerHour: 18.36032229,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#00D954",
@@ -80,7 +80,7 @@ export const slidersData = [
     id: "przegladarka",
     sliderValue: 0,
     gramsProducedPerHour: 16.48507886,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#FFC42B",
@@ -90,7 +90,7 @@ export const slidersData = [
     id: "netflix",
     sliderValue: 0,
     gramsProducedPerHour: 133.5269109,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#B90013",
@@ -100,7 +100,7 @@ export const slidersData = [
     id: "facebook",
     sliderValue: 0,
     gramsProducedPerHour: 22.63199657,
-    getCalulatedCo2Value() {
+    getCalculatedCO2Value() {
       return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
     },
     circleColor: "#176EE9",

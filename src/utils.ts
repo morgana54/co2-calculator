@@ -1,7 +1,19 @@
+import { slidersData } from "./slidersData";
+
 export const calculateCo2Value = (
   minutes: number,
   gramsProducedPerHour: number
 ) => (gramsProducedPerHour / 60) * minutes;
+
+export const getTotalProducedCO2 = () => {
+  let sum = 0;
+
+  slidersData.forEach((sliderData) => {
+    sum = sum + sliderData.getCalculatedCO2Value();
+  });
+
+  return Math.round(sum);
+};
 
 // This functions gets direct input range value
 export const timeConvertA = (minutes: number) => {
