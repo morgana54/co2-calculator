@@ -1,6 +1,35 @@
 import { renderGraph } from "./bubbleChart.js";
 import { setTooltipPositionAndValue } from "./utils.ts";
 
+// TERAZ: przeliczanie co2 (wzór / wzory)
+
+// CEL: uzyskać induwidualne wartości gramow co2 na podstawie minut zużycia
+
+// Rozmowa przez telefon	0,586285714	g Co2e/h
+// Whatsapp/Discord	1,788512571	g Co2e/h
+// gra na telefonie	7,525947086	g Co2e/h
+// Instagram	36,527292	g Co2e/h
+// Facebook	22,63199657	g Co2e/h
+// Tiktok	288,6639806	g Co2e/h
+// Netflix	133,5269109	g Co2e/h
+// Youtube	53,52104229	g Co2e/h
+// Spotify	18,36032229	g Co2e/h
+// Korzystanie z przeglądarki	16,48507886	g Co2e/h
+
+// 1h
+
+// czyli WZOR: ilość gramw co2 / 60 XDD
+
+// ZGRAĆ TO W JAKIMŚ JEDNYM OBIEKCIE SENSOWNIE, gdzie będzie wszystko indywidualne:
+// id slidera
+// wartość slidera
+// ilość spalania co2
+// przeliczona wartość co2 z wartości slidera
+// kolor do kołka
+// tekst do kołka (bo jest inny niż id)
+
+// łatwo
+
 // get to constants
 const SLIDERS_IDS = [
   "rozmowa_przez_telefon",

@@ -12,21 +12,29 @@
 
 <html>
   <body>
-    <div id="sliders-container">
+    <section id="hero-container"></section>
+    <section id="categories-section">
       <!-- 1440 = 24 * 60 - tyle jest minut w dobie -->
-      <div class="slider-wrapper">
-        <div class="slider-tooltip" id="rozmowa_przez_telefon-tooltip">
-          0 min
+
+      <div class="category-wrapper">
+        <p class="category-title">Rozmowa przez telefon</p>
+        <div class="category-bottom-container">
+          <img alt="" class="category-logo" src="./assets/icon_telephone.svg" />
+          <div class="slider-wrapper">
+            <div class="slider-tooltip" id="rozmowa_przez_telefon-tooltip">
+              0 min
+            </div>
+            <input
+              type="range"
+              id="rozmowa_przez_telefon"
+              class="slider"
+              min="0"
+              max="1440"
+              step="5"
+              value="0"
+            />
+          </div>
         </div>
-        <input
-          type="range"
-          id="rozmowa_przez_telefon"
-          class="slider"
-          min="0"
-          max="1440"
-          step="5"
-          value="0"
-        />
       </div>
 
       <div class="slider-wrapper">
@@ -122,9 +130,13 @@
           value="0"
         />
       </div>
-    </div>
+      <button id="count-btn">oblicz</button>
+    </section>
 
-    <button id="count-btn">Oblicz</button>
+    <section id="co2-summed-up-result-section">
+      <p>Codziennie wytwarzasz</p>
+      <p id="co2-result">1234g CO2</p>
+    </section>
 
     <div id="bubble-chart-container"></div>
 

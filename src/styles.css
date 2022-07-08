@@ -1,5 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
+
 * {
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+p {
+  margin: 0;
 }
 
 input[type="range"] {
@@ -7,7 +18,6 @@ input[type="range"] {
   background: #d9d9d9;
   -webkit-appearance: none;
   height: 7px;
-  margin-top: 20px;
   width: 100%;
 }
 
@@ -64,16 +74,43 @@ input[type="range"]::-ms-thumb:active {
   cursor: grabbing;
 }
 
-#sliders-container {
+#hero-container {
+  background: #17c690;
+  padding: 120px;
+}
+
+#categories-section {
+  transform: translateY(-120px);
+  border-radius: 132px;
   display: flex;
   flex-direction: column;
-  padding: 104px 155px 114px 120px;
+  padding: 104px 155px 0 120px;
+  background: white;
   /* ustawisz potem jakieś max width i center żeby na dużych ekranach dobrze tez wyglądało */
+}
+
+.category-wrapper {
+  display: flex;
+  flex-direction: column;
+  /* tymczasowe */
+  margin-bottom: 100px;
+}
+
+.category-title {
+  letter-spacing: 1px;
+}
+
+.category-bottom-container {
+  display: flex;
+  margin-top: 40px;
 }
 
 .slider-wrapper {
   position: relative;
-  margin-top: 40px;
+  margin-left: 60px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
 }
 
 .slider-tooltip {
@@ -86,11 +123,51 @@ input[type="range"]::-ms-thumb:active {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
   text-align: center;
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 150%;
   background: white;
   padding-top: 2px;
+}
+
+#count-btn {
+  background: #17c690;
+  border-radius: 50px;
+  border: 0;
+  padding: 22px 64px;
+  font-weight: 700;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  width: 168px;
+  margin-top: 90px;
+  align-self: flex-end;
+}
+
+#co2-summed-up-result-section {
+  background: #424242;
+  border-radius: 10px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 110px 0;
+}
+
+#co2-summed-up-result-section p {
+  font-weight: 600;
+  font-size: 64px;
+  color: white;
+}
+
+#co2-result {
+  color: #17c690 !important;
+}
+
+.horizontal-spacing {
+  padding-right: 155px;
+  padding-left: 155px;
 }
