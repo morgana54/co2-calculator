@@ -1,6 +1,6 @@
 import { slidersData } from "./slidersData";
 import { renderBubbleChart } from "./renderBubbleChart.js";
-import { setTooltipPositionAndValue } from "./utils";
+import { getTotalProducedCO2, setTooltipPositionAndValue } from "./utils";
 
 const handleSliderChange = (sliderId: string, i: number) => (event: Event) => {
   const newValue = (event.target as HTMLInputElement).value;
@@ -21,6 +21,23 @@ const $sliders = slidersData.map((sliderData, idx) => {
   return $slider;
 });
 
-document
-  .getElementById("count-btn")
-  ?.addEventListener("click", () => renderBubbleChart());
+document.getElementById("count-btn")?.addEventListener("click", () => {
+  // TODO: get all these action to util functions
+  const co2Result = document.getElementById(
+    "co2-result"
+  ) as HTMLParagraphElement;
+  const totalCO2 = getTotalProducedCO2().toString();
+  co2Result.innerHTML = `${totalCO2}g CO2`;
+
+  renderBubbleChart();
+
+  const bottomContainer = document.getElementById(
+    "bottom-container"
+  ) as HTMLDivElement;
+  bottomContainer.style.display = "block";
+
+  const element = document.getElementById(
+    "co2-summed-up-result-section"
+  ) as HTMLElement;
+  element.scrollIntoView({ behavior: "smooth" });
+});

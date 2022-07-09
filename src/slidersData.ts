@@ -4,7 +4,6 @@ import { calculateCo2Value } from "./utils";
 export const slidersData = [
   {
     id: "rozmowa_przez_telefon",
-    // dać maybe jakieś sensowne initial values żeby na pierwszy click bez zmiany też charty się wygenerowały
     sliderValue: 0,
     gramsProducedPerHour: 0.586285714,
     getCalculatedCO2Value() {

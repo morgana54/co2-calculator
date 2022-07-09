@@ -16,7 +16,7 @@ function BubbleChart(
     linkTarget = "_blank", // the target attribute for links, if any
     width = 640, // outer width, in pixels
     height = width, // outer height, in pixels
-    padding = 3, // padding between circles
+    padding = 4, // padding between circles
     margin = 1, // default margins
     marginTop = margin, // top margin, in pixels
     marginRight = margin, // right margin, in pixels
@@ -76,7 +76,14 @@ function BubbleChart(
       link == null ? null : (d, i) => link(D[d.data], i, data)
     )
     .attr("target", link == null ? null : linkTarget)
-    .attr("transform", (d) => `translate(${d.x},${d.y})`);
+    // tutaj się ustawia pozycje, wiec tutaj możesz coś kombinować z LAYOUTEM
+    .attr("transform", (d) => {
+      console.log(d);
+      // tutaj moglbys pewnie jakoś ustawić customowe pozycje, pokmiń potem
+
+      // warto żebyś wykminił skąd biorą się x i y
+      return `translate(${d.x},${d.y})`;
+    });
 
   // tutaj są style każdego z kołek
   leaf
@@ -88,17 +95,22 @@ function BubbleChart(
       // ESSSA KOLOR
       return D[circleIndex].circleColor;
     })
+    .attr("height", 500)
     .attr("fill-opacity", fillOpacity)
     .attr("r", (d) => {
-      console.log(d);
+      // console.log(d);
       return d.r;
     });
+
+  console.log(leaf);
 
   // usunięte
   // .attr("fill", G ? (d) => color(G[d.data]) : fill == null ? "none" : fill)
 
   if (T) leaf.append("title").text((d) => T[d.data]);
 
+  console.log(L);
+  // L - arrayka wszystkich labelow - ESSA
   if (L) {
     // A unique identifier for clip paths (to avoid conflicts).
     const uid = `O-${Math.random().toString(16).slice(2)}`;
@@ -166,6 +178,8 @@ export const renderBubbleChart = () => {
     title: (d) => `${d.id}\n${d.value.toLocaleString("en")}`,
     width: 852,
     height: 752,
+    // TUTAJ USTAWIASZ SPACING ŁATWOOOO
+    padding: 30,
   });
 
   if (isFirstChartRender) {

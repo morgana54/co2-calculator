@@ -15,7 +15,7 @@ export const getTotalProducedCO2 = () => {
   return Math.round(sum);
 };
 
-// This functions gets direct input range value
+// This function gets direct input range value
 export const timeConvertA = (minutes: number) => {
   var hours = minutes / 60;
   var flooredHours = Math.floor(hours);

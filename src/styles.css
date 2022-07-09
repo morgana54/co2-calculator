@@ -74,6 +74,10 @@ input[type="range"]::-ms-thumb:active {
   cursor: grabbing;
 }
 
+#bottom-container {
+  display: none;
+}
+
 #hero-container {
   background: #17c690;
   padding: 120px;
@@ -86,6 +90,7 @@ input[type="range"]::-ms-thumb:active {
   flex-direction: column;
   padding: 104px 155px 0 120px;
   background: white;
+
   /* ustawisz potem jakieś max width i center żeby na dużych ekranach dobrze tez wyglądało */
 }
 
