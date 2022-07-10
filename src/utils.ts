@@ -41,8 +41,14 @@ export const setTooltipPositionAndValue = (sliderId: string) => {
     ((parseInt(slider.value) - parseInt(slider.min)) * 100) /
       (parseInt(slider.max) - parseInt(slider.min))
   );
-  const newPosition = 10 - newValue * 0.2;
+  const newPosition = 10 - newValue * 0.4;
 
   tooltip.innerHTML = timeConvertA(parseInt(slider.value));
-  tooltip.style.left = `calc(${newValue}% + (${newPosition}px))`;
+  if (newValue > 60) {
+    tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 11px))`;
+  } else if (newValue > 30) {
+    tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 9px))`;
+  } else {
+    tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 7px))`;
+  }
 };
