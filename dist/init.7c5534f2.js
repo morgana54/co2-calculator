@@ -34581,7 +34581,7 @@ function BubbleChart(data) {
     // outer height, in pixels
     padding = 4,
     // padding between circles
-    margin = 1,
+    margin = 0,
     // default margins
     marginTop = margin,
     // top margin, in pixels
@@ -34624,7 +34624,9 @@ function BubbleChart(data) {
   const root = d3.pack().size([width - marginLeft - marginRight, height - marginTop - marginBottom]).padding(padding)(d3.hierarchy({
     children: I
   }).sum(i => V[i]));
-  const svg = d3.create("svg").attr("width", width).attr("height", height).attr("viewBox", [-marginLeft, -marginTop, width, height]).attr("style", "max-width: 100%; height: auto; height: intrinsic;").attr("fill", "currentColor").attr("font-size", 10).attr("font-family", "sans-serif").attr("text-anchor", "middle");
+  const isMobile = window.matchMedia("(max-width: 875px)").matches;
+  const svg = d3.create("svg").attr("width", width).attr("height", height).attr("viewBox", [-marginLeft, -marginTop, width, height]).attr("style", "max-width: 100%; height: auto; height: intrinsic;").attr("fill", "currentColor") // TUTAJ ROZMIAR FONTOW
+  .attr("font-size", isMobile ? 9 : 14).attr("font-family", "sans-serif").attr("text-anchor", "middle");
   const leaf = svg.selectAll("a").data(root.leaves()).join("a").attr("xlink:href", link == null ? null : (d, i) => link(D[d.data], i, data)).attr("target", link == null ? null : linkTarget) // tutaj się ustawia pozycje, wiec tutaj możesz coś kombinować z LAYOUTEM
   .attr("transform", d => {
     console.log(d); // tutaj moglbys pewnie jakoś ustawić customowe pozycje, pokmiń potem
@@ -34640,6 +34642,15 @@ function BubbleChart(data) {
     // console.log(d);
     return d.r;
   });
+
+  function crop(text, circle) {
+    var circleRadius = circle.node().getBBox().width;
+
+    while (text.node().getComputedTextLength() > circleRadius) {
+      text.text(text.text().slice(0, -4) + "...");
+    }
+  }
+
   console.log(leaf); // usunięte
   // .attr("fill", G ? (d) => color(G[d.data]) : fill == null ? "none" : fill)
 
@@ -34650,8 +34661,20 @@ function BubbleChart(data) {
     // A unique identifier for clip paths (to avoid conflicts).
     const uid = "O-".concat(Math.random().toString(16).slice(2));
     leaf.append("clipPath").attr("id", d => "".concat(uid, "-clip-").concat(d.data)).append("circle").attr("r", d => d.r);
-    leaf.append("text").attr("clip-path", d => "url(".concat(new URL("#".concat(uid, "-clip-").concat(d.data), location), ")")) // TUTAJ MASZ TSPAN
-    .selectAll("tspan").data(d => "".concat(L[d.data]).split(/\n/g)).join("tspan").attr("x", 0).attr("y", (d, i, D) => "".concat(i - D.length / 2 + 0.85, "em")).attr("fill-opacity", (d, i, D) => i === D.length - 1 ? 0.7 : null).text(d => d);
+    leaf.append("text") // .attr(
+    //   "clip-path",
+    //   (d) => `url(${new URL(`#${uid}-clip-${d.data}`, location)})`
+    // )
+    // TUTAJ MASZ TSPAN
+    .selectAll("tspan").data(d => "".concat(L[d.data]).split(/\n/g)).join("tspan").attr("color", "white").attr("x", 0).attr("y", (d, i, D) => {
+      if (i % 2 === 0) {
+        return "".concat(i - D.length / 2 + 0.85, "em");
+      }
+
+      return "".concat(i - D.length / 2 + 1.1, "em");
+    }).attr("fill-opacity", "1").text((d, index) => {
+      return d;
+    });
   }
 
   return Object.assign(svg.node(), {
@@ -34661,13 +34684,14 @@ function BubbleChart(data) {
   });
 }
 
-const getFile = (id, sliderValue, circleColor) => {
+const getFile = (id, sliderValue, circleColor, circleTitle) => {
   // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
   // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
   return {
     id: id,
     value: sliderValue,
-    circleColor
+    circleColor,
+    circleTitle
   };
 };
 
@@ -34678,12 +34702,13 @@ const calculateBubblesDataAKAgetFiles = () => {
     let {
       id,
       sliderValue,
-      circleColor
+      circleColor,
+      circleTitle
     } = _ref3;
 
     // Do not add zeroes
     if (sliderValue) {
-      files.push(getFile(id, sliderValue, circleColor));
+      files.push(getFile(id, sliderValue, circleColor, circleTitle));
     }
   });
 
@@ -34694,14 +34719,18 @@ let isFirstChartRender = true;
 
 const renderBubbleChart = () => {
   const files = calculateBubblesDataAKAgetFiles();
+  const isMobile = window.matchMedia("(max-width: 875px)").matches;
   const chart = BubbleChart(files, {
-    label: d => [...d.id.split(".").pop().split(/(?=[A-Z][a-z])/g), d.value.toLocaleString("en")].join("\n").concat(" g"),
+    // .split(".")
+    //       .pop()
+    //       .split(/(?=[A-Z][a-z])/g)
+    label: d => [d.circleTitle, d.value.toLocaleString("en")].join("\n").concat(" g"),
     value: d => d.value,
-    title: d => "".concat(d.id, "\n").concat(d.value.toLocaleString("en")),
-    width: 852,
-    height: 752,
+    title: d => "".concat(d.circleTitle, "\n").concat(d.value.toLocaleString("en")),
+    width: isMobile ? 300 : 800,
+    height: isMobile ? 460 : 600,
     // TUTAJ USTAWIASZ SPACING ŁATWOOOO
-    padding: 30
+    padding: isMobile ? 30 : 50
   });
 
   if (isFirstChartRender) {
@@ -34783,7 +34812,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49901" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57027" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

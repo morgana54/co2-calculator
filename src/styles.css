@@ -515,4 +515,8 @@ input[type="range"]::-ms-thumb:active {
   #bubble-chart-section {
     padding: 16px 24px;
   }
+
+  #bubble-chart-container {
+    transform: scale(1.2);
+  }
 }

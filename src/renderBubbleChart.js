@@ -17,7 +17,7 @@ function BubbleChart(
     width = 640, // outer width, in pixels
     height = width, // outer height, in pixels
     padding = 4, // padding between circles
-    margin = 1, // default margins
+    margin = 0, // default margins
     marginTop = margin, // top margin, in pixels
     marginRight = margin, // right margin, in pixels
     marginBottom = margin, // bottom margin, in pixels
@@ -56,6 +56,8 @@ function BubbleChart(
     .size([width - marginLeft - marginRight, height - marginTop - marginBottom])
     .padding(padding)(d3.hierarchy({ children: I }).sum((i) => V[i]));
 
+  const isMobile = window.matchMedia("(max-width: 875px)").matches;
+
   const svg = d3
     .create("svg")
     .attr("width", width)
@@ -63,7 +65,8 @@ function BubbleChart(
     .attr("viewBox", [-marginLeft, -marginTop, width, height])
     .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
     .attr("fill", "currentColor")
-    .attr("font-size", 10)
+    // TUTAJ ROZMIAR FONTOW
+    .attr("font-size", isMobile ? 9 : 14)
     .attr("font-family", "sans-serif")
     .attr("text-anchor", "middle");
 
@@ -102,6 +105,13 @@ function BubbleChart(
       return d.r;
     });
 
+  function crop(text, circle) {
+    var circleRadius = circle.node().getBBox().width;
+    while (text.node().getComputedTextLength() > circleRadius) {
+      text.text(text.text().slice(0, -4) + "...");
+    }
+  }
+
   console.log(leaf);
 
   // usunięte
@@ -123,35 +133,44 @@ function BubbleChart(
 
     leaf
       .append("text")
-      .attr(
-        "clip-path",
-        (d) => `url(${new URL(`#${uid}-clip-${d.data}`, location)})`
-      )
+      // .attr(
+      //   "clip-path",
+      //   (d) => `url(${new URL(`#${uid}-clip-${d.data}`, location)})`
+      // )
       // TUTAJ MASZ TSPAN
       .selectAll("tspan")
       .data((d) => `${L[d.data]}`.split(/\n/g))
       .join("tspan")
+      .attr("color", "white")
       .attr("x", 0)
-      .attr("y", (d, i, D) => `${i - D.length / 2 + 0.85}em`)
-      .attr("fill-opacity", (d, i, D) => (i === D.length - 1 ? 0.7 : null))
-      .text((d) => d);
+      .attr("y", (d, i, D) => {
+        if (i % 2 === 0) {
+          return `${i - D.length / 2 + 0.85}em`;
+        }
+
+        return `${i - D.length / 2 + 1.1}em`;
+      })
+      .attr("fill-opacity", "1")
+      .text((d, index) => {
+        return d;
+      });
   }
 
   return Object.assign(svg.node(), { scales: { color } });
 }
 
-const getFile = (id, sliderValue, circleColor) => {
+const getFile = (id, sliderValue, circleColor, circleTitle) => {
   // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
   // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
-  return { id: id, value: sliderValue, circleColor };
+  return { id: id, value: sliderValue, circleColor, circleTitle };
 };
 
 const calculateBubblesDataAKAgetFiles = () => {
   const files = [];
-  slidersData.forEach(({ id, sliderValue, circleColor }) => {
+  slidersData.forEach(({ id, sliderValue, circleColor, circleTitle }) => {
     // Do not add zeroes
     if (sliderValue) {
-      files.push(getFile(id, sliderValue, circleColor));
+      files.push(getFile(id, sliderValue, circleColor, circleTitle));
     }
   });
 
@@ -162,24 +181,20 @@ let isFirstChartRender = true;
 
 export const renderBubbleChart = () => {
   const files = calculateBubblesDataAKAgetFiles();
+  const isMobile = window.matchMedia("(max-width: 875px)").matches;
 
   const chart = BubbleChart(files, {
+    // .split(".")
+    //       .pop()
+    //       .split(/(?=[A-Z][a-z])/g)
     label: (d) =>
-      [
-        ...d.id
-          .split(".")
-          .pop()
-          .split(/(?=[A-Z][a-z])/g),
-        d.value.toLocaleString("en"),
-      ]
-        .join("\n")
-        .concat(" g"),
+      [d.circleTitle, d.value.toLocaleString("en")].join("\n").concat(" g"),
     value: (d) => d.value,
-    title: (d) => `${d.id}\n${d.value.toLocaleString("en")}`,
-    width: 852,
-    height: 752,
+    title: (d) => `${d.circleTitle}\n${d.value.toLocaleString("en")}`,
+    width: isMobile ? 300 : 800,
+    height: isMobile ? 460 : 600,
     // TUTAJ USTAWIASZ SPACING ŁATWOOOO
-    padding: 30,
+    padding: isMobile ? 30 : 50,
   });
 
   if (isFirstChartRender) {
