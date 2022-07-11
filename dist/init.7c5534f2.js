@@ -34660,7 +34660,8 @@ function BubbleChart(data) {
   if (L) {
     // A unique identifier for clip paths (to avoid conflicts).
     const uid = "O-".concat(Math.random().toString(16).slice(2));
-    leaf.append("clipPath").attr("id", d => "".concat(uid, "-clip-").concat(d.data)).append("circle").attr("r", d => d.r);
+    leaf.append("clipPath").attr("id", d => "".concat(uid, "-clip-").concat(d.data)).append("circle") // return d.r + 5; ŻEBY ZWIĘKSZYC PROMIEŃ KOLKA
+    .attr("r", d => d.r);
     leaf.append("text") // .attr(
     //   "clip-path",
     //   (d) => `url(${new URL(`#${uid}-clip-${d.data}`, location)})`
@@ -34812,7 +34813,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57027" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55736" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

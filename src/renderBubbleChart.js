@@ -129,6 +129,7 @@ function BubbleChart(
       .append("clipPath")
       .attr("id", (d) => `${uid}-clip-${d.data}`)
       .append("circle")
+      // return d.r + 5; ŻEBY ZWIĘKSZYC PROMIEŃ KOLKA
       .attr("r", (d) => d.r);
 
     leaf
