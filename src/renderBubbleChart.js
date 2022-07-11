@@ -102,7 +102,7 @@ function BubbleChart(
     .attr("fill-opacity", fillOpacity)
     .attr("r", (d) => {
       // console.log(d);
-      return d.r;
+      return d.r * 1.3;
     });
 
   function crop(text, circle) {
@@ -195,7 +195,7 @@ export const renderBubbleChart = () => {
     width: isMobile ? 300 : 800,
     height: isMobile ? 460 : 600,
     // TUTAJ USTAWIASZ SPACING ŁATWOOOO
-    padding: isMobile ? 30 : 50,
+    padding: isMobile ? 50 : 90,
   });
 
   if (isFirstChartRender) {
