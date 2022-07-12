@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
-    />
-    <style>
-      * {
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap">
+    <style>* {
         box-sizing: border-box;
         font-family: "Inter", sans-serif;
       }
@@ -95,6 +91,11 @@
       #hero-container {
         background: #17c690;
         padding: 150px 140px 250px 100px;
+      }
+
+      #hero-container img {
+        max-width: 306px;
+        max-height: 332px;
       }
 
       #hero-content-wrapper {
@@ -198,6 +199,11 @@
         margin-top: 0;
       }
 
+      .category-logo {
+        width: 70px;
+        height: 70px;
+      }
+
       .category-title {
         letter-spacing: 1px;
         margin-bottom: 32px;
@@ -255,6 +261,7 @@
 
         #categories-section img {
           max-width: 44px;
+          max-height: 43px;
         }
 
         .slider-wrapper {
@@ -617,487 +624,409 @@
         #bubble-chart-section p {
           font-size: 14px;
         }
-      }
-    </style>
+      }</style>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script type="text/javascript">
-      function init() {
-        // ids same as html ids
-        const slidersData = [
-          {
-            id: "rozmowa_przez_telefon",
-            sliderValue: 0,
-            gramsProducedPerHour: 0.586285714,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#9747FF",
-            circleTitle: "Rozmowa",
-          },
+    <script>function e() {
+  var _document$getElementB;
 
-          {
-            id: "komunikatory",
-            sliderValue: 0,
-            gramsProducedPerHour: 1.788512571,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#00CCFF",
-            circleTitle: "Komunikatory",
-          },
-          {
-            id: "gry",
-            sliderValue: 0,
-            gramsProducedPerHour: 7.525947086,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#FF7F00",
-            circleTitle: "Gry",
-          },
-          {
-            id: "instagram",
-            sliderValue: 0,
-            gramsProducedPerHour: 36.527292,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#FF5176",
-            circleTitle: "Instagram",
-          },
-          {
-            id: "tiktok",
-            sliderValue: 0,
-            gramsProducedPerHour: 288.6639806,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#000000",
-            circleTitle: "TikTok",
-          },
-          {
-            id: "youtube",
-            sliderValue: 0,
-            gramsProducedPerHour: 53.52104229,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#FF2424",
-            circleTitle: "YouTube",
-          },
-          {
-            id: "spotify",
-            sliderValue: 0,
-            gramsProducedPerHour: 18.36032229,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#00D954",
-            circleTitle: "Spotify",
-          },
-          {
-            id: "przegladarka",
-            sliderValue: 0,
-            gramsProducedPerHour: 16.48507886,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#FFC42B",
-            circleTitle: "Przeglądarka",
-          },
-          {
-            id: "netflix",
-            sliderValue: 0,
-            gramsProducedPerHour: 133.5269109,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#B90013",
-            circleTitle: "Netflix",
-          },
-          {
-            id: "facebook",
-            sliderValue: 0,
-            gramsProducedPerHour: 22.63199657,
-            getCalculatedCO2Value() {
-              return calculateCo2Value(
-                this.sliderValue,
-                this.gramsProducedPerHour
-              );
-            },
-            circleColor: "#176EE9",
-            circleTitle: "Facebook",
-          },
-        ];
+  // ids same as html ids
+  const slidersData = [{
+    id: "rozmowa_przez_telefon",
+    sliderValue: 0,
+    gramsProducedPerHour: 0.586285714,
 
-        // Copyright 2021 Observable, Inc.
-        // Released under the ISC license.
-        // https://observablehq.com/@d3/bubble-chart
-        function BubbleChart(
-          data,
-          {
-            name = ([x]) => x, // alias for label
-            label = name, // given d in data, returns text to display on the bubble
-            value = ([, y]) => y, // given d in data, returns a quantitative size
-            group, // given d in data, returns a categorical value for color
-            title, // given d in data, returns text to show on hover
-            link, // given a node d, its link (if any)
-            linkTarget = "_blank", // the target attribute for links, if any
-            width = 640, // outer width, in pixels
-            height = width, // outer height, in pixels
-            padding = 4, // padding between circles
-            margin = 0, // default margins
-            marginTop = margin, // top margin, in pixels
-            marginRight = margin, // right margin, in pixels
-            marginBottom = margin, // bottom margin, in pixels
-            marginLeft = margin, // left margin, in pixels
-            groups, // array of group names (the domain of the color scale)
-            colors, // an array of colors (for groups)
-            fill = "#ccc", // a static fill color, if no group channel is specified
-            fillOpacity = 1, // the fill opacity of the bubbles
-            stroke, // a static stroke around the bubbles
-            strokeWidth, // the stroke width around the bubbles, if any
-            strokeOpacity, // the stroke opacity around the bubbles, if any
-          } = {}
-        ) {
-          // Compute the values.
-          const D = d3.map(data, (d) => d);
-          const V = d3.map(data, value);
-          const G = group == null ? null : d3.map(data, group);
-          const I = d3.range(V.length).filter((i) => V[i] > 0);
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-          // Unique the groups.
-          if (G && groups === undefined) groups = I.map((i) => G[i]);
-          groups = G && new d3.InternSet(groups);
+    circleColor: "#9747FF",
+    circleTitle: "Rozmowa"
+  }, {
+    id: "komunikatory",
+    sliderValue: 0,
+    gramsProducedPerHour: 1.788512571,
 
-          // Construct scales.
-          // TUTAJ MODYFIKUJESZ TAK ŻEBY KOLOR MOŻNA BYŁO ŁATWO PODAĆ
-          const color = G && d3.scaleOrdinal(groups, colors);
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-          // Compute labels and titles.
-          const L = label == null ? null : d3.map(data, label);
-          const T =
-            title === undefined
-              ? L
-              : title == null
-              ? null
-              : d3.map(data, title);
+    circleColor: "#00CCFF",
+    circleTitle: "Komunikatory"
+  }, {
+    id: "gry",
+    sliderValue: 0,
+    gramsProducedPerHour: 7.525947086,
 
-          // Compute layout: create a 1-deep hierarchy, and pack it.
-          const root = d3
-            .pack()
-            .size([
-              width - marginLeft - marginRight,
-              height - marginTop - marginBottom,
-            ])
-            .padding(padding)(d3.hierarchy({ children: I }).sum((i) => V[i]));
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-          const isMobile = window.matchMedia("(max-width: 875px)").matches;
+    circleColor: "#FF7F00",
+    circleTitle: "Gry"
+  }, {
+    id: "instagram",
+    sliderValue: 0,
+    gramsProducedPerHour: 36.527292,
 
-          const svg = d3
-            .create("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("viewBox", [-marginLeft, -marginTop, width, height])
-            .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
-            .attr("fill", "currentColor")
-            // GLOBAL CIRCLES FONT SIZE
-            // .attr("font-size", isMobile ? 9 : 14)
-            .attr("font-family", "sans-serif")
-            .attr("text-anchor", "middle");
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-          const leaf = svg
-            .selectAll("a")
-            .data(root.leaves())
-            .join("a")
-            .attr(
-              "xlink:href",
-              link == null ? null : (d, i) => link(D[d.data], i, data)
-            )
-            .attr("target", link == null ? null : linkTarget)
-            .attr("transform", (d) => `translate(${d.x},${d.y})`);
+    circleColor: "#FF5176",
+    circleTitle: "Instagram"
+  }, {
+    id: "tiktok",
+    sliderValue: 0,
+    gramsProducedPerHour: 288.6639806,
 
-          // CIRCLES STYLES
-          leaf
-            .append("circle")
-            .attr("stroke", stroke)
-            .attr("stroke-width", strokeWidth)
-            .attr("stroke-opacity", strokeOpacity)
-            // USE COLOR FROM SLIDERS DATA OBJECT
-            .attr("fill", (_, circleIndex) => D[circleIndex].circleColor)
-            .attr("height", 500)
-            .attr("fill-opacity", fillOpacity)
-            .attr("r", (d) => d.r);
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-          if (T) leaf.append("title").text((d) => T[d.data]);
+    circleColor: "#000000",
+    circleTitle: "TikTok"
+  }, {
+    id: "youtube",
+    sliderValue: 0,
+    gramsProducedPerHour: 53.52104229,
 
-          // L - array of all labels (eg. "Netflix")
-          if (L) {
-            // A unique identifier for clip paths (to avoid conflicts).
-            const uid = `O-${Math.random().toString(16).slice(2)}`;
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-            // Create array holding each circle's radius
-            const radiusesArr = [];
+    circleColor: "#FF2424",
+    circleTitle: "YouTube"
+  }, {
+    id: "spotify",
+    sliderValue: 0,
+    gramsProducedPerHour: 18.36032229,
 
-            leaf
-              .append("clipPath")
-              .attr("id", (d) => `${uid}-clip-${d.data}`)
-              .append("circle")
-              .attr("r", (d) => {
-                // Append radiuses to array
-                radiusesArr.push(d.r);
-                return d.r;
-              });
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-            // Duplicates are created because below in tspan styling
-            // there are two entries for each circle (label and grams amount)
-            const duplicateRadiuses = radiusesArr.flatMap((i) => [i, i]);
-            let index1 = 0;
-            let index2 = 0;
+    circleColor: "#00D954",
+    circleTitle: "Spotify"
+  }, {
+    id: "przegladarka",
+    sliderValue: 0,
+    gramsProducedPerHour: 16.48507886,
 
-            // TEXT INSIDE THE CIRCLE
-            leaf
-              .append("text")
-              .selectAll("tspan")
-              .data((d) => `${L[d.data]}`.split(/\n/g))
-              .join("tspan")
-              .attr("color", "white")
-              .attr("x", 0)
-              // Create vertical space between label and grams amount
-              .attr("y", (d, i, D) => {
-                if (i % 2 === 0) {
-                  return `${i - D.length / 2 + 0.85}em`;
-                }
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-                return `${i - D.length / 2 + 1.1}em`;
-              })
-              .attr("fill-opacity", "1")
-              .text((text) => text)
-              .style("font-size", function (text, i) {
-                // Get current circle radius
-                const curRad = duplicateRadiuses[index1];
+    circleColor: "#FFC42B",
+    circleTitle: "Przeglądarka"
+  }, {
+    id: "netflix",
+    sliderValue: 0,
+    gramsProducedPerHour: 133.5269109,
 
-                // Don't show text
-                if (curRad < 27) {
-                  index1++;
-                  return "0px";
-                }
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-                if (curRad < 37) {
-                  index1++;
-                  return isMobile ? "8px" : "9px";
-                }
+    circleColor: "#B90013",
+    circleTitle: "Netflix"
+  }, {
+    id: "facebook",
+    sliderValue: 0,
+    gramsProducedPerHour: 22.63199657,
 
-                if (curRad < 50) {
-                  index1++;
-                  return "11px";
-                }
+    getCalculatedCO2Value() {
+      return calculateCo2Value(this.sliderValue, this.gramsProducedPerHour);
+    },
 
-                // Default font size
-                index1++;
-                return isMobile ? "11px" : "14px";
-              });
-          }
+    circleColor: "#176EE9",
+    circleTitle: "Facebook"
+  }]; // Copyright 2021 Observable, Inc.
+  // Released under the ISC license.
+  // https://observablehq.com/@d3/bubble-chart
 
-          return Object.assign(svg.node(), { scales: { color } });
+  function BubbleChart(data) {
+    let {
+      name = _ref => {
+        let [x] = _ref;
+        return x;
+      },
+      // alias for label
+      label = name,
+      // given d in data, returns text to display on the bubble
+      value = _ref2 => {
+        let [, y] = _ref2;
+        return y;
+      },
+      // given d in data, returns a quantitative size
+      group,
+      // given d in data, returns a categorical value for color
+      title,
+      // given d in data, returns text to show on hover
+      link,
+      // given a node d, its link (if any)
+      linkTarget = "_blank",
+      // the target attribute for links, if any
+      width = 640,
+      // outer width, in pixels
+      height = width,
+      // outer height, in pixels
+      padding = 4,
+      // padding between circles
+      margin = 0,
+      // default margins
+      marginTop = margin,
+      // top margin, in pixels
+      marginRight = margin,
+      // right margin, in pixels
+      marginBottom = margin,
+      // bottom margin, in pixels
+      marginLeft = margin,
+      // left margin, in pixels
+      groups,
+      // array of group names (the domain of the color scale)
+      colors,
+      // an array of colors (for groups)
+      fill = "#ccc",
+      // a static fill color, if no group channel is specified
+      fillOpacity = 1,
+      // the fill opacity of the bubbles
+      stroke,
+      // a static stroke around the bubbles
+      strokeWidth,
+      // the stroke width around the bubbles, if any
+      strokeOpacity // the stroke opacity around the bubbles, if any
+
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    // Compute the values.
+    const D = d3.map(data, d => d);
+    const V = d3.map(data, value);
+    const G = group == null ? null : d3.map(data, group);
+    const I = d3.range(V.length).filter(i => V[i] > 0); // Unique the groups.
+
+    if (G && groups === undefined) groups = I.map(i => G[i]);
+    groups = G && new d3.InternSet(groups); // Construct scales.
+    // TUTAJ MODYFIKUJESZ TAK ŻEBY KOLOR MOŻNA BYŁO ŁATWO PODAĆ
+
+    const color = G && d3.scaleOrdinal(groups, colors); // Compute labels and titles.
+
+    const L = label == null ? null : d3.map(data, label);
+    const T = title === undefined ? L : title == null ? null : d3.map(data, title); // Compute layout: create a 1-deep hierarchy, and pack it.
+
+    const root = d3.pack().size([width - marginLeft - marginRight, height - marginTop - marginBottom]).padding(padding)(d3.hierarchy({
+      children: I
+    }).sum(i => V[i]));
+    const isMobile = window.matchMedia("(max-width: 875px)").matches;
+    const svg = d3.create("svg").attr("width", width).attr("height", height).attr("viewBox", [-marginLeft, -marginTop, width, height]).attr("style", "max-width: 100%; height: auto; height: intrinsic;").attr("fill", "currentColor") // GLOBAL CIRCLES FONT SIZE
+    // .attr("font-size", isMobile ? 9 : 14)
+    .attr("font-family", "sans-serif").attr("text-anchor", "middle");
+    const leaf = svg.selectAll("a").data(root.leaves()).join("a").attr("xlink:href", link == null ? null : (d, i) => link(D[d.data], i, data)).attr("target", link == null ? null : linkTarget).attr("transform", d => "translate(".concat(d.x, ",").concat(d.y, ")")); // CIRCLES STYLES
+
+    leaf.append("circle").attr("stroke", stroke).attr("stroke-width", strokeWidth).attr("stroke-opacity", strokeOpacity) // USE COLOR FROM SLIDERS DATA OBJECT
+    .attr("fill", (_, circleIndex) => D[circleIndex].circleColor).attr("height", 500).attr("fill-opacity", fillOpacity).attr("r", d => d.r);
+    if (T) leaf.append("title").text(d => T[d.data]); // L - array of all labels (eg. "Netflix")
+
+    if (L) {
+      // A unique identifier for clip paths (to avoid conflicts).
+      const uid = "O-".concat(Math.random().toString(16).slice(2)); // Create array holding each circle's radius
+
+      const radiusesArr = [];
+      leaf.append("clipPath").attr("id", d => "".concat(uid, "-clip-").concat(d.data)).append("circle").attr("r", d => {
+        // Append radiuses to array
+        radiusesArr.push(d.r);
+        return d.r;
+      }); // Duplicates are created because below in tspan styling
+      // there are two entries for each circle (label and grams amount)
+
+      const duplicateRadiuses = radiusesArr.flatMap(i => [i, i]);
+      let index1 = 0;
+      let index2 = 0; // TEXT INSIDE THE CIRCLE
+
+      leaf.append("text").selectAll("tspan").data(d => "".concat(L[d.data]).split(/\n/g)).join("tspan").attr("color", "white").attr("x", 0) // Create vertical space between label and grams amount
+      .attr("y", (d, i, D) => {
+        if (i % 2 === 0) {
+          return "".concat(i - D.length / 2 + 0.85, "em");
         }
 
-        const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => {
-          // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
-          // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
-          return {
-            id: id,
-            value: calculatedCO2Value,
-            circleColor,
-            circleTitle,
-          };
-        };
+        return "".concat(i - D.length / 2 + 1.1, "em");
+      }).attr("fill-opacity", "1").text(text => text).style("font-size", function (text, i) {
+        // Get current circle radius
+        const curRad = duplicateRadiuses[index1]; // Don't show text
 
-        const calculateBubblesDataAKAgetFiles = () => {
-          const files = [];
-          slidersData.forEach((slider) => {
-            const { id, circleColor, circleTitle } = slider;
-            const calculatedCO2Value = slider.getCalculatedCO2Value();
-
-            // Fill bubble chart legend values
-            const legendValue = document.getElementById(`${id}-legend`);
-            if (legendValue && calculatedCO2Value) {
-              legendValue.innerHTML = calculatedCO2Value;
-              legendValue.parentElement.parentElement.style.display = "flex";
-            } else {
-              legendValue.parentElement.parentElement.style.display = "none";
-            }
-
-            // Do not add zeroes
-            if (calculatedCO2Value) {
-              files.push(
-                getFile(id, calculatedCO2Value, circleColor, circleTitle)
-              );
-            }
-          });
-
-          return files;
-        };
-
-        let isFirstChartRender = true;
-
-        const renderBubbleChart = () => {
-          const files = calculateBubblesDataAKAgetFiles();
-          const isMobile = window.matchMedia("(max-width: 875px)").matches;
-
-          const chart = BubbleChart(files, {
-            label: (d) =>
-              [d.circleTitle, d.value.toLocaleString("en")]
-                .join("\n")
-                .concat(" g"),
-            value: (d) => d.value,
-            title: (d) => `${d.circleTitle}\n${d.value.toLocaleString("en")}`,
-            width: isMobile ? 300 : 860,
-            height: isMobile ? 300 : 700,
-            // CIRCLES SPACING
-            padding: isMobile ? 10 : 50,
-          });
-
-          if (isFirstChartRender) {
-            isFirstChartRender = false;
-            document.getElementById("bubble-chart-wrapper").appendChild(chart);
-          } else {
-            const previousBubbleChart = document.getElementById(
-              "bubble-chart-wrapper"
-            ).childNodes[0];
-
-            document
-              .getElementById("bubble-chart-wrapper")
-              .replaceChild(chart, previousBubbleChart);
-          }
-        };
-
-        const handleSliderChange = (sliderId, i) => (event) => {
-          const newValue = event.target.value;
-
-          // Write new slider value to slidersData global obj
-          slidersData[i].sliderValue = newValue;
-
-          setTooltipPositionAndValue(sliderId);
-        };
-
-        // Add event listeners to sliders
-        slidersData.forEach((sliderData, idx) => {
-          const { id: sliderId } = sliderData;
-          const $slider = document.getElementById(sliderId);
-
-          $slider?.addEventListener("input", handleSliderChange(sliderId, idx));
-        });
-
-        document.getElementById("count-btn")?.addEventListener("click", () => {
-          setTotalCO2AndTreesNumber();
-          renderBubbleChart();
-
-          const bottomContainer = document.getElementById("bottom-container");
-          bottomContainer.style.display = "block";
-          const element = document.getElementById(
-            "co2-summed-up-result-section"
-          );
-          element.scrollIntoView({ behavior: "smooth" });
-        });
-
-        // ALL FUNCTIONS
-        function setTotalCO2AndTreesNumber() {
-          const co2Result = document.getElementById("co2-result");
-          const totalCO2 = getTotalProducedCO2().toString();
-          co2Result.innerHTML = `${totalCO2}g CO2`;
-
-          const co2GramsConsumedPerDayByTree = 60.2739726;
-          const calculatedGramsConsumedByTree = Math.round(
-            totalCO2 / co2GramsConsumedPerDayByTree
-          );
-
-          const treesNumber = document.getElementById("trees-number");
-          treesNumber.innerHTML = calculatedGramsConsumedByTree;
+        if (curRad < 27) {
+          index1++;
+          return "0px";
         }
 
-        function calculateCo2Value(minutes, gramsProducedPerHour) {
-          return Math.round((gramsProducedPerHour / 60) * minutes);
+        if (curRad < 37) {
+          index1++;
+          return isMobile ? "8px" : "9px";
         }
 
-        function getTotalProducedCO2() {
-          let sum = 0;
+        if (curRad < 50) {
+          index1++;
+          return "11px";
+        } // Default font size
 
-          slidersData.forEach((sliderData) => {
-            sum = sum + sliderData.getCalculatedCO2Value();
-          });
 
-          return Math.round(sum);
-        }
+        index1++;
+        return isMobile ? "11px" : "14px";
+      });
+    }
 
-        // This function gets direct input range value
-        function timeConvertA(minutes) {
-          var hours = minutes / 60;
-          var flooredHours = Math.floor(hours);
-          var minutes = (hours - flooredHours) * 60;
-          var roundedMinutes = Math.round(minutes);
-          if (flooredHours) {
-            return flooredHours + " h " + roundedMinutes + " min";
-          } else {
-            return roundedMinutes + " min";
-          }
-        }
-
-        function setTooltipPositionAndValue(sliderId) {
-          const tooltip = document.getElementById(`${sliderId}-tooltip`);
-          const slider = document.getElementById(sliderId);
-
-          // TODO: dograć lepiej tę przedziałkę
-
-          // zrozumieć to potem dokładnie, tu sie wylicza ratio przedziałki jakoś
-          const newValue = Number(
-            ((parseInt(slider.value) - parseInt(slider.min)) * 100) /
-              (parseInt(slider.max) - parseInt(slider.min))
-          );
-          const newPosition = 10 - newValue * 0.4;
-
-          tooltip.innerHTML = timeConvertA(parseInt(slider.value));
-          if (newValue > 60) {
-            tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 11px))`;
-          } else if (newValue > 30) {
-            tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 9px))`;
-          } else {
-            tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 7px))`;
-          }
-        }
+    return Object.assign(svg.node(), {
+      scales: {
+        color
       }
-    </script>
+    });
+  }
+
+  const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => {
+    // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
+    // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
+    return {
+      id: id,
+      value: calculatedCO2Value,
+      circleColor,
+      circleTitle
+    };
+  };
+
+  const calculateBubblesDataAKAgetFiles = () => {
+    const files = [];
+    slidersData.forEach(slider => {
+      const {
+        id,
+        circleColor,
+        circleTitle
+      } = slider;
+      const calculatedCO2Value = slider.getCalculatedCO2Value(); // Fill bubble chart legend values
+
+      const legendValue = document.getElementById("".concat(id, "-legend"));
+
+      if (legendValue && calculatedCO2Value) {
+        legendValue.innerHTML = calculatedCO2Value;
+        legendValue.parentElement.parentElement.style.display = "flex";
+      } else {
+        legendValue.parentElement.parentElement.style.display = "none";
+      } // Do not add zeroes
+
+
+      if (calculatedCO2Value) {
+        files.push(getFile(id, calculatedCO2Value, circleColor, circleTitle));
+      }
+    });
+    return files;
+  };
+
+  let isFirstChartRender = true;
+
+  const renderBubbleChart = () => {
+    const files = calculateBubblesDataAKAgetFiles();
+    const isMobile = window.matchMedia("(max-width: 875px)").matches;
+    const chart = BubbleChart(files, {
+      label: d => [d.circleTitle, d.value.toLocaleString("en")].join("\n").concat(" g"),
+      value: d => d.value,
+      title: d => "".concat(d.circleTitle, "\n").concat(d.value.toLocaleString("en")),
+      width: isMobile ? 300 : 860,
+      height: isMobile ? 300 : 700,
+      // CIRCLES SPACING
+      padding: isMobile ? 10 : 50
+    });
+
+    if (isFirstChartRender) {
+      isFirstChartRender = false;
+      document.getElementById("bubble-chart-wrapper").appendChild(chart);
+    } else {
+      const previousBubbleChart = document.getElementById("bubble-chart-wrapper").childNodes[0];
+      document.getElementById("bubble-chart-wrapper").replaceChild(chart, previousBubbleChart);
+    }
+  };
+
+  const handleSliderChange = (sliderId, i) => event => {
+    const newValue = event.target.value; // Write new slider value to slidersData global obj
+
+    slidersData[i].sliderValue = newValue;
+    setTooltipPositionAndValue(sliderId);
+  }; // Add event listeners to sliders
+
+
+  slidersData.forEach((sliderData, idx) => {
+    const {
+      id: sliderId
+    } = sliderData;
+    const $slider = document.getElementById(sliderId);
+    $slider === null || $slider === void 0 ? void 0 : $slider.addEventListener("input", handleSliderChange(sliderId, idx));
+  });
+  (_document$getElementB = document.getElementById("count-btn")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.addEventListener("click", () => {
+    setTotalCO2AndTreesNumber();
+    renderBubbleChart();
+    const bottomContainer = document.getElementById("bottom-container");
+    bottomContainer.style.display = "block";
+    const element = document.getElementById("co2-summed-up-result-section");
+    element.scrollIntoView({
+      behavior: "smooth"
+    });
+  }); // ALL FUNCTIONS
+
+  function setTotalCO2AndTreesNumber() {
+    const co2Result = document.getElementById("co2-result");
+    const totalCO2 = getTotalProducedCO2().toString();
+    co2Result.innerHTML = "".concat(totalCO2, "g CO2");
+    const co2GramsConsumedPerDayByTree = 60.2739726;
+    const calculatedGramsConsumedByTree = Math.round(totalCO2 / co2GramsConsumedPerDayByTree);
+    const treesNumber = document.getElementById("trees-number");
+    treesNumber.innerHTML = calculatedGramsConsumedByTree;
+  }
+
+  function calculateCo2Value(minutes, gramsProducedPerHour) {
+    return Math.round(gramsProducedPerHour / 60 * minutes);
+  }
+
+  function getTotalProducedCO2() {
+    let sum = 0;
+    slidersData.forEach(sliderData => {
+      sum = sum + sliderData.getCalculatedCO2Value();
+    });
+    return Math.round(sum);
+  } // This function gets direct input range value
+
+
+  function timeConvertA(minutes) {
+    var hours = minutes / 60;
+    var flooredHours = Math.floor(hours);
+    var minutes = (hours - flooredHours) * 60;
+    var roundedMinutes = Math.round(minutes);
+
+    if (flooredHours) {
+      return flooredHours + " h " + roundedMinutes + " min";
+    } else {
+      return roundedMinutes + " min";
+    }
+  }
+
+  function setTooltipPositionAndValue(sliderId) {
+    const tooltip = document.getElementById("".concat(sliderId, "-tooltip"));
+    const slider = document.getElementById(sliderId); // TODO: dograć lepiej tę przedziałkę
+    // zrozumieć to potem dokładnie, tu sie wylicza ratio przedziałki jakoś
+
+    const newValue = Number((parseInt(slider.value) - parseInt(slider.min)) * 100 / (parseInt(slider.max) - parseInt(slider.min)));
+    const newPosition = 10 - newValue * 0.4;
+    tooltip.innerHTML = timeConvertA(parseInt(slider.value));
+
+    if (newValue > 60) {
+      tooltip.style.left = "calc(".concat(newValue, "% + (").concat(newPosition, "px + 11px))");
+    } else if (newValue > 30) {
+      tooltip.style.left = "calc(".concat(newValue, "% + (").concat(newPosition, "px + 9px))");
+    } else {
+      tooltip.style.left = "calc(".concat(newValue, "% + (").concat(newPosition, "px + 7px))");
+    }
+  }
+}</script>
     <title>CO2 Calculator</title>
   </head>
 
+  <!-- CHANGE THIS!! -->
   <body onLoad="e()">
     <section id="hero-container">
       <div id="hero-content-wrapper" class="global-container-width">
@@ -1108,7 +1037,7 @@
             kotkami a ile, gdy dzwonisz do znajomych.
           </p>
         </div>
-        <img alt="" src="./assets/icons/icon_tree.svg" />
+        <img alt="" src="/icon_tree.99c59366.png">
       </div>
     </section>
 
@@ -1116,24 +1045,12 @@
       <div class="category-wrapper">
         <p class="category-title">Rozmowa przez telefon</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="./assets/icons/icon_telephone.svg"
-          />
+          <img alt="" class="category-logo" src="/img_phone.dc65717b.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="rozmowa_przez_telefon-tooltip">
               0 min
             </div>
-            <input
-              type="range"
-              id="rozmowa_przez_telefon"
-              class="slider"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="rozmowa_przez_telefon" class="slider" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1141,21 +1058,10 @@
       <div class="category-wrapper">
         <p class="category-title">Komunikatory</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="assets/icons/icon_communicators.svg"
-          />
+          <img alt="" class="category-logo" src="/icon_communicators.6ab2f634.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="komunikatory-tooltip">0 min</div>
-            <input
-              type="range"
-              id="komunikatory"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="komunikatory" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1163,17 +1069,10 @@
       <div class="category-wrapper">
         <p class="category-title">Gry</p>
         <div class="category-bottom-container">
-          <img alt="" class="category-logo" src="assets/icons/icon_games.svg" />
+          <img alt="" class="category-logo" src="/icon_games.7bbc10d5.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="gry-tooltip">0 min</div>
-            <input
-              type="range"
-              id="gry"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="gry" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1181,21 +1080,10 @@
       <div class="category-wrapper">
         <p class="category-title">Instagram</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="assets/icons/icon_instagram.svg"
-          />
+          <img alt="" class="category-logo" src="/icon_instagram.97fd1210.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="instagram-tooltip">0 min</div>
-            <input
-              type="range"
-              id="instagram"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="instagram" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1203,17 +1091,10 @@
       <div class="category-wrapper">
         <p class="category-title">Facebook</p>
         <div class="category-bottom-container">
-          <img alt="" class="category-logo" src="assets/icons/icon_fb.svg" />
+          <img alt="" class="category-logo" src="/icon_fb.bcf77501.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="facebook-tooltip">0 min</div>
-            <input
-              type="range"
-              id="facebook"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="facebook" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1221,21 +1102,10 @@
       <div class="category-wrapper">
         <p class="category-title">TikTok</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="assets/icons/icon_tiktok.svg"
-          />
+          <img alt="" class="category-logo" src="/icon_tiktok.5b8f6ae4.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="tiktok-tooltip">0 min</div>
-            <input
-              type="range"
-              id="tiktok"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="tiktok" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1243,21 +1113,10 @@
       <div class="category-wrapper">
         <p class="category-title">Netflix</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="assets/icons/icon_netflix.svg"
-          />
+          <img alt="" class="category-logo" src="/icon_netflix.7186272f.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="netflix-tooltip">0 min</div>
-            <input
-              type="range"
-              id="netflix"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="netflix" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1265,17 +1124,10 @@
       <div class="category-wrapper">
         <p class="category-title">YouTube</p>
         <div class="category-bottom-container">
-          <img alt="" class="category-logo" src="assets/icons/icon_yt.svg" />
+          <img alt="" class="category-logo" src="/icon_yt.f3c0f00e.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="youtube-tooltip">0 min</div>
-            <input
-              type="range"
-              id="youtube"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="youtube" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1283,21 +1135,10 @@
       <div class="category-wrapper">
         <p class="category-title">Spotify</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="assets/icons/icon_spotify.svg"
-          />
+          <img alt="" class="category-logo" src="/icon_spotify.d0cfc95b.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="spotify-tooltip">0 min</div>
-            <input
-              type="range"
-              id="spotify"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="spotify" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1305,21 +1146,10 @@
       <div class="category-wrapper">
         <p class="category-title">Przeglądarka</p>
         <div class="category-bottom-container">
-          <img
-            alt=""
-            class="category-logo"
-            src="assets/icons/icon_browser.svg"
-          />
+          <img alt="" class="category-logo" src="/icon_browser.bbe0f780.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="przegladarka-tooltip">0 min</div>
-            <input
-              type="range"
-              id="przegladarka"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="przegladarka" min="0" max="1440" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1430,7 +1260,7 @@
       <section id="carbon-footprint-section">
         <div id="carbon-footprint-container">
           <div id="carbon-footprint-paragraphs">
-            <hr />
+            <hr>
             <p>
               Co to jest ŚLAD WĘGLOWY? To część śladu środowiskowego - mówi nam
               o ilości gazów cieplarnianych wyemitowanych do atmosfery na skutek
@@ -1450,11 +1280,11 @@
           </div>
 
           <h2 id="trees-number-header">
-            Żeby zneutralizować twój ślad weglowy dziennie musi pracować:
+            Żeby zrównoważyć Twój ślad węglowy potrzeba dziennie:
           </h2>
           <div id="trees-number-wrapper">
             <div id="trees-number">40</div>
-            <img alt="" src="./assets/icons/icon_tree1.svg" />
+            <img alt="" src="/icon_trees_number.922f24b2.png">
           </div>
         </div>
       </section>
@@ -1462,10 +1292,10 @@
       <section id="partners-logos-section">
         <div id="partners-logos-container">
           <div id="partners-logos-wrapper" class="global-container-width">
-            <img alt="" src="./assets/images/image1.png" />
-            <img alt="" src="./assets/images/image2.png" />
-            <img alt="" src="./assets/images/image3.png" />
-            <img alt="" src="./assets/images/image4.png" />
+            <img alt="" src="/image1.72a195bc.png">
+            <img alt="" src="/image2.701753d6.png">
+            <img alt="" src="/image3.05e2835e.png">
+            <img alt="" src="/image4.492631cc.png">
           </div>
         </div>
       </section>
