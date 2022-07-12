@@ -371,25 +371,48 @@
 
       #carbon-footprint-section p {
         margin-top: 40px;
-        line-height: 24px;
-        font-size: 16px;
+        line-height: 25px;
+        font-size: 17px;
         color: white;
         font-weight: 300;
       }
 
+      #carbon-footprint-section p:nth-of-type(2) {
+        margin-top: 24px;
+      }
+
       #carbon-footprint-paragraphs {
-        max-width: 780px;
+        max-width: 1190px;
       }
 
       #carbon-footprint-container {
         display: flex;
         justify-content: space-between;
+        flex-direction: column;
         max-width: 1400px;
         margin: 0 auto;
       }
 
-      #carbon-footprint-container img {
-        align-self: flex-end;
+      #trees-number-header {
+        text-align: center;
+        line-height: 48px;
+        font-size: 32px;
+        color: white;
+        margin-top: 40px;
+      }
+
+      #trees-number-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-top: 40px;
+      }
+
+      #trees-number {
+        font-size: 128px;
+        color: white;
+        line-height: 192px;
+        font-weight: 700;
       }
 
       @media (max-width: 1200px) {
@@ -414,6 +437,27 @@
         #carbon-footprint-container p {
           font-size: 14px;
         }
+
+        #trees-number-header {
+          line-height: 30px;
+          font-size: 20px;
+          margin: 36px auto 0;
+          max-width: 312px;
+        }
+
+        #trees-number-wrapper {
+          margin-top: 40px;
+        }
+
+        #trees-number-wrapper img {
+          width: 136px;
+          margin-top: 0;
+        }
+
+        #trees-number {
+          font-size: 64px;
+          line-height: 96px;
+        }
       }
 
       #partners-logos-section {
@@ -423,7 +467,7 @@
 
       #partners-logos-container {
         width: 100%;
-        padding: 38px 114px 0 120px;
+        padding: 38px 120px 0 120px;
         background-color: white;
         border-bottom-left-radius: 132px;
         border-bottom-right-radius: 132px;
@@ -1376,22 +1420,30 @@
           <div id="carbon-footprint-paragraphs">
             <hr />
             <p>
-              Ślad węglowy jest częścią śladu środowiskowego - mówi nam o ilości
-              gazów cieplarnianych wyemitowanych do atmosfery na skutek
+              Co to jest ŚLAD WĘGLOWY? To część śladu środowiskowego - mówi nam
+              o ilości gazów cieplarnianych wyemitowanych do atmosfery na skutek
               działalności człowieka (w tym wypadku korzystania z telefonu),
               które przyczyniają się do globalnego ocieplenia. Dla przykładu -
-              oglądanie godzinnego filmu na Netflixie emituje tyle gazów
-              cieplarnianych, co dwa drzewa są w stanie pochłonąć w ciągu 24
-              godzin.
+              oglądając przez godzinę film na Netflixie emitujemy 140 gramów
+              gazów cieplarnianych - to tyle, ile dwa drzewa są w stanie
+              pochłonąć w ciągu 24 godzin. Gdyby każdy z nas codziennie emitował
+              tyle gramów gazów cieplarnianych używając telefonu to w sumie
+              dałoby to 0,65% rocznych emisji Polski.
             </p>
             <p>
-              Takie działanie w skali roku będzie odpowiadało za 0,65% rocznych
-              emisji przypisywanych mieszkańcom naszego kraju. Więcej informacji
-              można znaleźć w opisie kalkulatora, który można znaleźć tutaj.
+              Dane do kalkulatora opracowane zostały na podstawie badań i
+              researchu latem 2022. Szczegółowy raport można znaleźć tutaj
+              (link).
             </p>
           </div>
 
-          <img alt="" src="./assets/icons/icon_tree1.svg" />
+          <h2 id="trees-number-header">
+            Żeby zneutralizować twój ślad weglowy musi pracować:
+          </h2>
+          <div id="trees-number-wrapper">
+            <div id="trees-number">40</div>
+            <img alt="" src="./assets/icons/icon_tree1.svg" />
+          </div>
         </div>
       </section>
 
