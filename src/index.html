@@ -295,6 +295,17 @@
         .slider-tooltip {
           top: -19px;
         }
+
+        .slider-wrapper::before {
+          bottom: -20px;
+          left: 5px;
+          font-weight: 400;
+        }
+
+        .slider-wrapper::after {
+          bottom: -20px;
+          font-weight: 400;
+        }
       }
 
       #count-btn-wrapper {
@@ -1109,6 +1120,7 @@
           const newPosition = 10 - newValue * 0.4;
 
           tooltip.innerHTML = timeConvertA(parseInt(slider.value));
+
           if (newValue > 60) {
             tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 11px))`;
           } else if (newValue > 30) {
