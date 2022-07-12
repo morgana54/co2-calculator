@@ -574,7 +574,7 @@
               );
             },
             circleColor: "#FF7F00",
-            circleTitle: "Rozmowa",
+            circleTitle: "Gry",
           },
           {
             id: "instagram",
@@ -740,7 +740,7 @@
             .attr("viewBox", [-marginLeft, -marginTop, width, height])
             .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
             .attr("fill", "currentColor")
-            // TUTAJ ROZMIAR FONTOW
+            // GLOBAL CIRCLES FONT SIZE
             // .attr("font-size", isMobile ? 9 : 14)
             .attr("font-family", "sans-serif")
             .attr("text-anchor", "middle");
@@ -754,48 +754,28 @@
               link == null ? null : (d, i) => link(D[d.data], i, data)
             )
             .attr("target", link == null ? null : linkTarget)
-            // tutaj się ustawia pozycje, wiec tutaj możesz coś kombinować z LAYOUTEM
-            .attr("transform", (d) => {
-              // console.log(d);
-              // tutaj moglbys pewnie jakoś ustawić customowe pozycje, pokmiń potem
+            .attr("transform", (d) => `translate(${d.x},${d.y})`);
 
-              // warto żebyś wykminił skąd biorą się x i y
-              return `translate(${d.x},${d.y})`;
-            });
-
-          // ROBOCZE ROZWIAZANIE: mozesz zapisywac wszystkie wartosci "r" stąd powyżej
-          // Wtedy odczyasz je z arrayki i użyjesz w tspanie na dole keidy nadajesz font size
-
-          // tutaj są style każdego z kołek
+          // CIRCLES STYLES
           leaf
             .append("circle")
             .attr("stroke", stroke)
             .attr("stroke-width", strokeWidth)
             .attr("stroke-opacity", strokeOpacity)
-            .attr("fill", (_, circleIndex) => {
-              // ESSSA KOLOR
-              return D[circleIndex].circleColor;
-            })
+            // USE COLOR FROM SLIDERS DATA OBJECT
+            .attr("fill", (_, circleIndex) => D[circleIndex].circleColor)
             .attr("height", 500)
             .attr("fill-opacity", fillOpacity)
-            .attr("r", (d) => {
-              // console.log(d);
-              return d.r;
-            });
-
-          // console.log(leaf);
-
-          // usunięte
-          // .attr("fill", G ? (d) => color(G[d.data]) : fill == null ? "none" : fill)
+            .attr("r", (d) => d.r);
 
           if (T) leaf.append("title").text((d) => T[d.data]);
 
-          // console.log(L);
-          // L - arrayka wszystkich labelow - ESSA
+          // L - array of all labels (eg. "Netflix")
           if (L) {
             // A unique identifier for clip paths (to avoid conflicts).
             const uid = `O-${Math.random().toString(16).slice(2)}`;
 
+            // Create array holding each circle's radius
             const radiusesArr = [];
 
             leaf
@@ -803,26 +783,26 @@
               .attr("id", (d) => `${uid}-clip-${d.data}`)
               .append("circle")
               .attr("r", (d) => {
+                // Append radiuses to array
                 radiusesArr.push(d.r);
                 return d.r;
               });
 
+            // Duplicates are created because below in tspan styling
+            // there are two entries for each circle (label and grams amount)
+            const duplicateRadiuses = radiusesArr.flatMap((i) => [i, i]);
             let index1 = 0;
             let index2 = 0;
-            const duplicateRadiuses = radiusesArr.flatMap((i) => [i, i]);
 
+            // TEXT INSIDE THE CIRCLE
             leaf
               .append("text")
-              // .attr(
-              //   "clip-path",
-              //   (d) => `url(${new URL(`#${uid}-clip-${d.data}`, location)})`
-              // )
-              // TUTAJ MASZ TSPAN
               .selectAll("tspan")
               .data((d) => `${L[d.data]}`.split(/\n/g))
               .join("tspan")
               .attr("color", "white")
               .attr("x", 0)
+              // Create vertical space between label and grams amount
               .attr("y", (d, i, D) => {
                 if (i % 2 === 0) {
                   return `${i - D.length / 2 + 0.85}em`;
@@ -831,60 +811,31 @@
                 return `${i - D.length / 2 + 1.1}em`;
               })
               .attr("fill-opacity", "1")
-              .style("font-size", function (d, i) {
-                // JAK JUZ SIE UDA TO ZROBIC DLA NAZW GORNYCH TO ODWTORZ TO DLA GRAMOW TEZ TO
-                // bedziesz musial po prostu dwa z rzedu stąd przypisywac do jednego indexa radiusesArray i tyle (albo radiuses array duplikujesz kazdy element!)
-
-                // TERAZ: robisz to tylko poniżej danej dlugosci radiusa
-
+              .text((text) => text)
+              .style("font-size", function (text, i) {
+                // Get current circle radius
                 const curRad = duplicateRadiuses[index1];
 
-                // trzy checki
-                // 1. jesli curRad < 46 to ZOSTAW 14 px i bedzie dobrze wygladac
-                // 2. jeśli wyliczy font-size wiekszy niz 14 to daj 14px
-                // 3. jesli mniejsze kolko niz 25 rad to wgle nie wyswietlaj tekstu
-
-                if (curRad < 46) {
-                  var len = d.substring(0, Math.floor(curRad / 3)).length;
-                  var size = curRad / 3;
-                  size *= 10 / len;
-                  size += 1;
-
-                  const fontSize = Math.round(size);
-                  // console.log("font-size: ", Math.round(size) + "px");
-
+                // Don't show text
+                if (curRad < 27) {
                   index1++;
-
-                  if (fontSize > 14) {
-                    return "14px";
-                  }
-
-                  return Math.round(size) - 4 + "px";
+                  return "0px";
                 }
 
+                if (curRad < 36) {
+                  index1++;
+                  return isMobile ? "8px" : "9px";
+                }
+
+                if (curRad < 50) {
+                  index1++;
+                  return "11px";
+                }
+
+                // Default font size
                 index1++;
-
-                return "14px";
-                // return "5px";
-              })
-              .text((d) => {
-                const curRad = duplicateRadiuses[index2];
-                console.log("name and rad", { d, curRad });
-
-                if (curRad < 25) {
-                  index2++;
-
-                  return "";
-                }
-
-                index2++;
-
-                return d;
+                return isMobile ? "11px" : "14px";
               });
-            // .text(function (d) {
-            //   var text = d.name.substring(0, d.r / 3);
-            //   return text;
-            // })
           }
 
           return Object.assign(svg.node(), { scales: { color } });
@@ -936,9 +887,9 @@
             value: (d) => d.value,
             title: (d) => `${d.circleTitle}\n${d.value.toLocaleString("en")}`,
             width: isMobile ? 300 : 800,
-            height: isMobile ? 460 : 1000,
-            // TUTAJ USTAWIASZ SPACING ŁATWOOOO
-            padding: isMobile ? 50 : 90,
+            height: isMobile ? 300 : 800,
+            // CIRCLES SPACING
+            padding: isMobile ? 10 : 50,
           });
 
           if (isFirstChartRender) {
