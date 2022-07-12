@@ -505,7 +505,20 @@
         }
       }
 
-      #bubble-chart-container {
+      .legend-circle {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        margin-right: 7px;
+      }
+
+      .legend-row {
+        display: flex;
+        align-items: center;
+        margin-top: 24px;
+      }
+
+      #bubble-chart-wrapper {
         display: flex;
         justify-content: center;
       }
@@ -525,7 +538,7 @@
           padding: 16px 24px;
         }
 
-        #bubble-chart-container {
+        #bubble-chart-wrapper {
           transform: scale(1.2);
         }
       }
@@ -693,7 +706,7 @@
             groups, // array of group names (the domain of the color scale)
             colors, // an array of colors (for groups)
             fill = "#ccc", // a static fill color, if no group channel is specified
-            fillOpacity = 0.7, // the fill opacity of the bubbles
+            fillOpacity = 1, // the fill opacity of the bubbles
             stroke, // a static stroke around the bubbles
             strokeWidth, // the stroke width around the bubbles, if any
             strokeOpacity, // the stroke opacity around the bubbles, if any
@@ -822,7 +835,7 @@
                   return "0px";
                 }
 
-                if (curRad < 36) {
+                if (curRad < 37) {
                   index1++;
                   return isMobile ? "8px" : "9px";
                 }
@@ -857,15 +870,20 @@
           slidersData.forEach((slider) => {
             const { id, circleColor, circleTitle } = slider;
             const calculatedCO2Value = slider.getCalculatedCO2Value();
+
+            // Fill bubble chart legend values
+            const legendValue = document.getElementById(`${id}-legend`);
+            if (legendValue && calculatedCO2Value) {
+              legendValue.innerHTML = calculatedCO2Value;
+              legendValue.parentElement.parentElement.style.display = "flex";
+            } else {
+              legendValue.parentElement.parentElement.style.display = "none";
+            }
+
             // Do not add zeroes
             if (calculatedCO2Value) {
               files.push(
-                getFile(
-                  id,
-                  Math.round(calculatedCO2Value),
-                  circleColor,
-                  circleTitle
-                )
+                getFile(id, calculatedCO2Value, circleColor, circleTitle)
               );
             }
           });
@@ -894,16 +912,14 @@
 
           if (isFirstChartRender) {
             isFirstChartRender = false;
-            document
-              .getElementById("bubble-chart-container")
-              .appendChild(chart);
+            document.getElementById("bubble-chart-wrapper").appendChild(chart);
           } else {
             const previousBubbleChart = document.getElementById(
-              "bubble-chart-container"
+              "bubble-chart-wrapper"
             ).childNodes[0];
 
             document
-              .getElementById("bubble-chart-container")
+              .getElementById("bubble-chart-wrapper")
               .replaceChild(chart, previousBubbleChart);
           }
         };
@@ -945,7 +961,7 @@
         });
 
         function calculateCo2Value(minutes, gramsProducedPerHour) {
-          return (gramsProducedPerHour / 60) * minutes;
+          return Math.round((gramsProducedPerHour / 60) * minutes);
         }
 
         function getTotalProducedCO2() {
@@ -1235,7 +1251,92 @@
 
       <section id="bubble-chart-section">
         <p>Twoje wyniki</p>
-        <div id="bubble-chart-container"></div>
+
+        <div id="bubble-chart-container">
+          <div id="bubble-chart-legend">
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #9747ff"></div>
+              <div>
+                Rozmowa przez telefon -
+                <span id="rozmowa_przez_telefon-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #00ccff"></div>
+              <div>
+                Komunikatory -
+                <span id="komunikatory-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #ff7f00"></div>
+              <div>
+                Granie -
+                <span id="gry-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #ff5176"></div>
+              <div>
+                Instagram -
+                <span id="instagram-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #176ee9"></div>
+              <div>
+                Facebook -
+                <span id="facebook-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #000000"></div>
+              <div>
+                TikTok -
+                <span id="tiktok-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #b90013"></div>
+              <div>
+                Netflix -
+                <span id="netflix-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #ff0000"></div>
+              <div>
+                YouTube -
+                <span id="youtube-legend">23</span> g
+              </div>
+            </div>
+
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #00d954"></div>
+              <div>
+                Spotify -
+                <span id="spotify-legend">23</span> g
+              </div>
+            </div>
+            <div class="legend-row">
+              <div class="legend-circle" style="background: #ffc42b"></div>
+              <div>
+                Przeglądarka -
+                <span id="przegladarka-legend">23</span> g
+              </div>
+            </div>
+            <!--  -->
+          </div>
+
+          <div id="bubble-chart-wrapper"></div>
+        </div>
       </section>
 
       <section id="carbon-footprint-section">
