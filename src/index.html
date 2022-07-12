@@ -266,6 +266,14 @@
         }
       }
 
+      #count-btn-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+
       #count-btn {
         background: #17c690;
         border-radius: 50px;
@@ -277,7 +285,6 @@
         cursor: pointer;
         width: 168px;
         margin-top: 90px;
-        align-self: flex-end;
       }
 
       @media (max-width: 875px) {
@@ -505,6 +512,19 @@
         }
       }
 
+      #bubble-chart-container {
+        display: flex;
+        position: relative;
+      }
+
+      #bubble-chart-wrapper {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: -120px;
+        right: -90px;
+      }
+
       .legend-circle {
         width: 26px;
         height: 26px;
@@ -516,30 +536,38 @@
         display: flex;
         align-items: center;
         margin-top: 24px;
-      }
-
-      #bubble-chart-wrapper {
-        display: flex;
-        justify-content: center;
+        white-space: nowrap;
       }
 
       #bubble-chart-section {
-        padding: 80px 100px;
+        padding: 80px 100px 20px;
       }
 
       #bubble-chart-section p {
         line-height: 24px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 300px;
+        margin-bottom: 64px;
       }
 
       @media (max-width: 875px) {
         #bubble-chart-section {
-          padding: 16px 24px;
+          padding: 16px 24px 52px;
         }
 
         #bubble-chart-wrapper {
           transform: scale(1.2);
+          top: -20px;
+          right: 0;
+          margin-bottom: 40px;
+        }
+
+        #bubble-chart-container {
+          flex-direction: column-reverse;
+        }
+
+        #bubble-chart-section p {
+          font-size: 14px;
         }
       }
     </style>
@@ -904,8 +932,8 @@
                 .concat(" g"),
             value: (d) => d.value,
             title: (d) => `${d.circleTitle}\n${d.value.toLocaleString("en")}`,
-            width: isMobile ? 300 : 800,
-            height: isMobile ? 300 : 800,
+            width: isMobile ? 300 : 860,
+            height: isMobile ? 300 : 700,
             // CIRCLES SPACING
             padding: isMobile ? 10 : 50,
           });
@@ -1240,7 +1268,9 @@
         </div>
       </div>
 
-      <button id="count-btn">oblicz</button>
+      <div id="count-btn-wrapper">
+        <button id="count-btn">oblicz</button>
+      </div>
     </section>
 
     <div id="bottom-container">
@@ -1250,92 +1280,94 @@
       </section>
 
       <section id="bubble-chart-section">
-        <p>Twoje wyniki</p>
+        <div class="global-container-width">
+          <p>Twoje wyniki</p>
 
-        <div id="bubble-chart-container">
-          <div id="bubble-chart-legend">
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #9747ff"></div>
-              <div>
-                Rozmowa przez telefon -
-                <span id="rozmowa_przez_telefon-legend">23</span> g
+          <div id="bubble-chart-container">
+            <div id="bubble-chart-legend">
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #9747ff"></div>
+                <div>
+                  Rozmowa przez telefon -
+                  <span id="rozmowa_przez_telefon-legend">23</span> g
+                </div>
               </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #00ccff"></div>
+                <div>
+                  Komunikatory -
+                  <span id="komunikatory-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ff7f00"></div>
+                <div>
+                  Granie -
+                  <span id="gry-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ff5176"></div>
+                <div>
+                  Instagram -
+                  <span id="instagram-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #176ee9"></div>
+                <div>
+                  Facebook -
+                  <span id="facebook-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #000000"></div>
+                <div>
+                  TikTok -
+                  <span id="tiktok-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #b90013"></div>
+                <div>
+                  Netflix -
+                  <span id="netflix-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ff0000"></div>
+                <div>
+                  YouTube -
+                  <span id="youtube-legend">23</span> g
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #00d954"></div>
+                <div>
+                  Spotify -
+                  <span id="spotify-legend">23</span> g
+                </div>
+              </div>
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ffc42b"></div>
+                <div>
+                  Przeglądarka -
+                  <span id="przegladarka-legend">23</span> g
+                </div>
+              </div>
+              <!--  -->
             </div>
 
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #00ccff"></div>
-              <div>
-                Komunikatory -
-                <span id="komunikatory-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #ff7f00"></div>
-              <div>
-                Granie -
-                <span id="gry-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #ff5176"></div>
-              <div>
-                Instagram -
-                <span id="instagram-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #176ee9"></div>
-              <div>
-                Facebook -
-                <span id="facebook-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #000000"></div>
-              <div>
-                TikTok -
-                <span id="tiktok-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #b90013"></div>
-              <div>
-                Netflix -
-                <span id="netflix-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #ff0000"></div>
-              <div>
-                YouTube -
-                <span id="youtube-legend">23</span> g
-              </div>
-            </div>
-
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #00d954"></div>
-              <div>
-                Spotify -
-                <span id="spotify-legend">23</span> g
-              </div>
-            </div>
-            <div class="legend-row">
-              <div class="legend-circle" style="background: #ffc42b"></div>
-              <div>
-                Przeglądarka -
-                <span id="przegladarka-legend">23</span> g
-              </div>
-            </div>
-            <!--  -->
+            <div id="bubble-chart-wrapper"></div>
           </div>
-
-          <div id="bubble-chart-wrapper"></div>
         </div>
       </section>
 
