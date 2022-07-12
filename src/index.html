@@ -366,7 +366,7 @@
         height: 4px;
         background: white;
         border: 0;
-        margin: 0;
+        margin: 0 auto;
       }
 
       #carbon-footprint-section p {
@@ -436,6 +436,10 @@
 
         #carbon-footprint-container p {
           font-size: 14px;
+        }
+
+        #carbon-footprint-section hr {
+          margin: 0;
         }
 
         #trees-number-header {
@@ -1006,31 +1010,39 @@
         };
 
         // Add event listeners to sliders
-        const $sliders = slidersData.map((sliderData, idx) => {
+        slidersData.forEach((sliderData, idx) => {
           const { id: sliderId } = sliderData;
           const $slider = document.getElementById(sliderId);
 
           $slider?.addEventListener("input", handleSliderChange(sliderId, idx));
-
-          return $slider;
         });
 
         document.getElementById("count-btn")?.addEventListener("click", () => {
-          // TODO: get all these action to util functions
-          const co2Result = document.getElementById("co2-result");
-          const totalCO2 = getTotalProducedCO2().toString();
-          co2Result.innerHTML = `${totalCO2}g CO2`;
-
+          setTotalCO2AndTreesNumber();
           renderBubbleChart();
 
           const bottomContainer = document.getElementById("bottom-container");
           bottomContainer.style.display = "block";
-
           const element = document.getElementById(
             "co2-summed-up-result-section"
           );
           element.scrollIntoView({ behavior: "smooth" });
         });
+
+        // ALL FUNCTIONS
+        function setTotalCO2AndTreesNumber() {
+          const co2Result = document.getElementById("co2-result");
+          const totalCO2 = getTotalProducedCO2().toString();
+          co2Result.innerHTML = `${totalCO2}g CO2`;
+
+          const co2GramsConsumedPerDayByTree = 60.2739726;
+          const calculatedGramsConsumedByTree = Math.round(
+            totalCO2 / co2GramsConsumedPerDayByTree
+          );
+
+          const treesNumber = document.getElementById("trees-number");
+          treesNumber.innerHTML = calculatedGramsConsumedByTree;
+        }
 
         function calculateCo2Value(minutes, gramsProducedPerHour) {
           return Math.round((gramsProducedPerHour / 60) * minutes);
@@ -1438,7 +1450,7 @@
           </div>
 
           <h2 id="trees-number-header">
-            Żeby zneutralizować twój ślad weglowy musi pracować:
+            Żeby zneutralizować twój ślad weglowy dziennie musi pracować:
           </h2>
           <div id="trees-number-wrapper">
             <div id="trees-number">40</div>
