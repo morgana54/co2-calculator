@@ -435,6 +435,10 @@
         margin-top: 40px;
       }
 
+      #trees-number-wrapper img {
+        max-width: 393px;
+      }
+
       #trees-number {
         font-size: 128px;
         color: white;
@@ -650,7 +654,7 @@
     <script>function e() {
   var _document$getElementB;
 
-  // ids same as html ids
+  // Application state
   const slidersData = [{
     id: "rozmowa_przez_telefon",
     sliderValue: 0,
@@ -826,7 +830,6 @@
 
     if (G && groups === undefined) groups = I.map(i => G[i]);
     groups = G && new d3.InternSet(groups); // Construct scales.
-    // TUTAJ MODYFIKUJESZ TAK ŻEBY KOLOR MOŻNA BYŁO ŁATWO PODAĆ
 
     const color = G && d3.scaleOrdinal(groups, colors); // Compute labels and titles.
 
@@ -836,10 +839,7 @@
     const root = d3.pack().size([width - marginLeft - marginRight, height - marginTop - marginBottom]).padding(padding)(d3.hierarchy({
       children: I
     }).sum(i => V[i]));
-    const isMobile = window.matchMedia("(max-width: 875px)").matches;
-    const svg = d3.create("svg").attr("width", width).attr("height", height).attr("viewBox", [-marginLeft, -marginTop, width, height]).attr("style", "max-width: 100%; height: auto; height: intrinsic;").attr("fill", "currentColor") // GLOBAL CIRCLES FONT SIZE
-    // .attr("font-size", isMobile ? 9 : 14)
-    .attr("font-family", "sans-serif").attr("text-anchor", "middle");
+    const svg = d3.create("svg").attr("width", width).attr("height", height).attr("viewBox", [-marginLeft, -marginTop, width, height]).attr("style", "max-width: 100%; height: auto; height: intrinsic;").attr("fill", "currentColor").attr("font-family", "sans-serif").attr("text-anchor", "middle");
     const leaf = svg.selectAll("a").data(root.leaves()).join("a").attr("xlink:href", link == null ? null : (d, i) => link(D[d.data], i, data)).attr("target", link == null ? null : linkTarget).attr("transform", d => "translate(".concat(d.x, ",").concat(d.y, ")")); // CIRCLES STYLES
 
     leaf.append("circle").attr("stroke", stroke).attr("stroke-width", strokeWidth).attr("stroke-opacity", strokeOpacity) // USE COLOR FROM SLIDERS DATA OBJECT
@@ -859,6 +859,7 @@
       // there are two entries for each circle (label and grams amount)
 
       const duplicateRadiuses = radiusesArr.flatMap(i => [i, i]);
+      const isMobile = window.matchMedia("(max-width: 875px)").matches;
       let index1 = 0;
       let index2 = 0; // TEXT INSIDE THE CIRCLE
 
@@ -871,7 +872,7 @@
         return "".concat(i - D.length / 2 + 1.1, "em");
       }).attr("fill-opacity", "1").text(text => text).style("font-size", function (text, i) {
         // Get current circle radius
-        const curRad = duplicateRadiuses[index1]; // Don't show text
+        const curRad = duplicateRadiuses[index1]; // Don't show any text
 
         if (curRad < 27) {
           index1++;
@@ -901,16 +902,12 @@
     });
   }
 
-  const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => {
-    // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
-    // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
-    return {
-      id: id,
-      value: calculatedCO2Value,
-      circleColor,
-      circleTitle
-    };
-  };
+  const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => ({
+    id: id,
+    value: calculatedCO2Value,
+    circleColor,
+    circleTitle
+  });
 
   const calculateBubblesDataAKAgetFiles = () => {
     const files = [];
@@ -1027,9 +1024,7 @@
 
   function setTooltipPositionAndValue(sliderId) {
     const tooltip = document.getElementById("".concat(sliderId, "-tooltip"));
-    const slider = document.getElementById(sliderId); // TODO: dograć lepiej tę przedziałkę
-    // zrozumieć to potem dokładnie, tu sie wylicza ratio przedziałki jakoś
-
+    const slider = document.getElementById(sliderId);
     const newValue = Number((parseInt(slider.value) - parseInt(slider.min)) * 100 / (parseInt(slider.max) - parseInt(slider.min)));
     const newPosition = 10 - newValue * 0.4;
     tooltip.innerHTML = timeConvertA(parseInt(slider.value));

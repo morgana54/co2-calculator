@@ -439,6 +439,10 @@
         margin-top: 40px;
       }
 
+      #trees-number-wrapper img {
+        max-width: 393px;
+      }
+
       #trees-number {
         font-size: 128px;
         color: white;
@@ -654,7 +658,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script type="text/javascript">
       function e() {
-        // ids same as html ids
+        // Application state
         const slidersData = [
           {
             id: "rozmowa_przez_telefon",
@@ -830,7 +834,6 @@
           groups = G && new d3.InternSet(groups);
 
           // Construct scales.
-          // TUTAJ MODYFIKUJESZ TAK ŻEBY KOLOR MOŻNA BYŁO ŁATWO PODAĆ
           const color = G && d3.scaleOrdinal(groups, colors);
 
           // Compute labels and titles.
@@ -851,8 +854,6 @@
             ])
             .padding(padding)(d3.hierarchy({ children: I }).sum((i) => V[i]));
 
-          const isMobile = window.matchMedia("(max-width: 875px)").matches;
-
           const svg = d3
             .create("svg")
             .attr("width", width)
@@ -860,8 +861,6 @@
             .attr("viewBox", [-marginLeft, -marginTop, width, height])
             .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
             .attr("fill", "currentColor")
-            // GLOBAL CIRCLES FONT SIZE
-            // .attr("font-size", isMobile ? 9 : 14)
             .attr("font-family", "sans-serif")
             .attr("text-anchor", "middle");
 
@@ -911,6 +910,7 @@
             // Duplicates are created because below in tspan styling
             // there are two entries for each circle (label and grams amount)
             const duplicateRadiuses = radiusesArr.flatMap((i) => [i, i]);
+            const isMobile = window.matchMedia("(max-width: 875px)").matches;
             let index1 = 0;
             let index2 = 0;
 
@@ -936,7 +936,7 @@
                 // Get current circle radius
                 const curRad = duplicateRadiuses[index1];
 
-                // Don't show text
+                // Don't show any text
                 if (curRad < 27) {
                   index1++;
                   return "0px";
@@ -961,16 +961,12 @@
           return Object.assign(svg.node(), { scales: { color } });
         }
 
-        const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => {
-          // MUSISZ USTALIĆ JAK DOKŁADNIE MA WYGLĄDAĆ JEDEN PLIK (JAKIE PROPERTISY)
-          // I CO KAŻDY Z NICH ROBI, A JAK NIE ZROZUMIESZ TO ZAPYTASZ KACPRA
-          return {
-            id: id,
-            value: calculatedCO2Value,
-            circleColor,
-            circleTitle,
-          };
-        };
+        const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => ({
+          id: id,
+          value: calculatedCO2Value,
+          circleColor,
+          circleTitle,
+        });
 
         const calculateBubblesDataAKAgetFiles = () => {
           const files = [];
@@ -1106,9 +1102,6 @@
           const tooltip = document.getElementById(`${sliderId}-tooltip`);
           const slider = document.getElementById(sliderId);
 
-          // TODO: dograć lepiej tę przedziałkę
-
-          // zrozumieć to potem dokładnie, tu sie wylicza ratio przedziałki jakoś
           const newValue = Number(
             ((parseInt(slider.value) - parseInt(slider.min)) * 100) /
               (parseInt(slider.max) - parseInt(slider.min))
