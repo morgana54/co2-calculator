@@ -192,7 +192,7 @@
         display: flex;
         flex-direction: column;
         margin-top: 76px;
-        max-width: 1400px;
+        max-width: 760px;
         width: 100%;
       }
 
@@ -234,7 +234,7 @@
       }
 
       .slider-wrapper::after {
-        content: "24 h";
+        content: "12 h";
         position: absolute;
         right: 0;
         bottom: -4px;
@@ -306,7 +306,7 @@
       }
 
       #count-btn-wrapper {
-        max-width: 1400px;
+        max-width: 760px;
         margin: 0 auto;
         width: 100%;
         display: flex;
@@ -396,7 +396,7 @@
 
       #carbon-footprint-section {
         background: #17c690;
-        padding: 68px 114px 100px 120px;
+        padding: 68px 114px 100px 100px;
         border-radius: 132px;
       }
 
@@ -411,17 +411,13 @@
       #carbon-footprint-section p {
         margin-top: 40px;
         line-height: 25px;
-        font-size: 17px;
+        font-size: 19px;
         color: white;
-        font-weight: 300;
+        font-weight: 400;
       }
 
       #carbon-footprint-section p:nth-of-type(2) {
         margin-top: 24px;
-      }
-
-      #carbon-footprint-paragraphs {
-        max-width: 1190px;
       }
 
       #carbon-footprint-container {
@@ -637,7 +633,8 @@
       #bubble-chart-section p {
         line-height: 24px;
         font-size: 18px;
-        font-weight: 300px;
+        font-weight: 600;
+        letter-spacing: 1px;
         margin-bottom: 64px;
       }
 
@@ -882,7 +879,10 @@
         }
 
         return "".concat(i - D.length / 2 + 1.1, "em");
-      }).attr("fill-opacity", "1").text(text => text).style("font-size", function (text, i) {
+      }).attr("fill-opacity", "1").text(text => {
+        const textWithoutComma = text.replace(",", "");
+        return textWithoutComma;
+      }).style("font-size", function (text, i) {
         // Get current circle radius
         const curRad = duplicateRadiuses[index1]; // Don't show any text
 
@@ -1077,7 +1077,7 @@
             <div class="slider-tooltip" id="rozmowa_przez_telefon-tooltip">
               0 min
             </div>
-            <input type="range" id="rozmowa_przez_telefon" class="slider" min="0" max="1440" step="5" value="0">
+            <input type="range" id="rozmowa_przez_telefon" class="slider" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1088,7 +1088,7 @@
           <img alt="" class="category-logo" src="/icon_communicators.6ab2f634.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="komunikatory-tooltip">0 min</div>
-            <input type="range" id="komunikatory" min="0" max="1440" step="5" value="0">
+            <input type="range" id="komunikatory" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1099,7 +1099,7 @@
           <img alt="" class="category-logo" src="/icon_games.7bbc10d5.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="gry-tooltip">0 min</div>
-            <input type="range" id="gry" min="0" max="1440" step="5" value="0">
+            <input type="range" id="gry" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1110,7 +1110,7 @@
           <img alt="" class="category-logo" src="/icon_instagram.97fd1210.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="instagram-tooltip">0 min</div>
-            <input type="range" id="instagram" min="0" max="1440" step="5" value="0">
+            <input type="range" id="instagram" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1121,7 +1121,7 @@
           <img alt="" class="category-logo" src="/icon_fb.bcf77501.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="facebook-tooltip">0 min</div>
-            <input type="range" id="facebook" min="0" max="1440" step="5" value="0">
+            <input type="range" id="facebook" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1132,7 +1132,7 @@
           <img alt="" class="category-logo" src="/icon_tiktok.5b8f6ae4.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="tiktok-tooltip">0 min</div>
-            <input type="range" id="tiktok" min="0" max="1440" step="5" value="0">
+            <input type="range" id="tiktok" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1143,7 +1143,7 @@
           <img alt="" class="category-logo" src="/icon_netflix.7186272f.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="netflix-tooltip">0 min</div>
-            <input type="range" id="netflix" min="0" max="1440" step="5" value="0">
+            <input type="range" id="netflix" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1154,7 +1154,7 @@
           <img alt="" class="category-logo" src="/icon_yt.f3c0f00e.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="youtube-tooltip">0 min</div>
-            <input type="range" id="youtube" min="0" max="1440" step="5" value="0">
+            <input type="range" id="youtube" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1165,7 +1165,7 @@
           <img alt="" class="category-logo" src="/icon_spotify.d0cfc95b.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="spotify-tooltip">0 min</div>
-            <input type="range" id="spotify" min="0" max="1440" step="5" value="0">
+            <input type="range" id="spotify" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1176,7 +1176,7 @@
           <img alt="" class="category-logo" src="/icon_browser.bbe0f780.png">
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="przegladarka-tooltip">0 min</div>
-            <input type="range" id="przegladarka" min="0" max="1440" step="5" value="0">
+            <input type="range" id="przegladarka" min="0" max="720" step="5" value="0">
           </div>
         </div>
       </div>
@@ -1202,7 +1202,7 @@
                 <div class="legend-circle" style="background: #9747ff"></div>
                 <div>
                   Rozmowa przez telefon -
-                  <span id="rozmowa_przez_telefon-legend">23</span> g
+                  <span id="rozmowa_przez_telefon-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1210,7 +1210,7 @@
                 <div class="legend-circle" style="background: #00ccff"></div>
                 <div>
                   Komunikatory -
-                  <span id="komunikatory-legend">23</span> g
+                  <span id="komunikatory-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1218,7 +1218,7 @@
                 <div class="legend-circle" style="background: #ff7f00"></div>
                 <div>
                   Granie -
-                  <span id="gry-legend">23</span> g
+                  <span id="gry-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1226,7 +1226,7 @@
                 <div class="legend-circle" style="background: #ff5176"></div>
                 <div>
                   Instagram -
-                  <span id="instagram-legend">23</span> g
+                  <span id="instagram-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1234,7 +1234,7 @@
                 <div class="legend-circle" style="background: #176ee9"></div>
                 <div>
                   Facebook -
-                  <span id="facebook-legend">23</span> g
+                  <span id="facebook-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1242,7 +1242,7 @@
                 <div class="legend-circle" style="background: #000000"></div>
                 <div>
                   TikTok -
-                  <span id="tiktok-legend">23</span> g
+                  <span id="tiktok-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1250,7 +1250,7 @@
                 <div class="legend-circle" style="background: #b90013"></div>
                 <div>
                   Netflix -
-                  <span id="netflix-legend">23</span> g
+                  <span id="netflix-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1258,7 +1258,7 @@
                 <div class="legend-circle" style="background: #ff0000"></div>
                 <div>
                   YouTube -
-                  <span id="youtube-legend">23</span> g
+                  <span id="youtube-legend">23</span> g CO2
                 </div>
               </div>
 
@@ -1266,14 +1266,14 @@
                 <div class="legend-circle" style="background: #00d954"></div>
                 <div>
                   Spotify -
-                  <span id="spotify-legend">23</span> g
+                  <span id="spotify-legend">23</span> g CO2
                 </div>
               </div>
               <div class="legend-row">
                 <div class="legend-circle" style="background: #ffc42b"></div>
                 <div>
                   Przeglądarka -
-                  <span id="przegladarka-legend">23</span> g
+                  <span id="przegladarka-legend">23</span> g CO2
                 </div>
               </div>
               <!--  -->
