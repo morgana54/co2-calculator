@@ -4,14 +4,1139 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      input[type="range"] {
+        outline: none;
+        background: #d9d9d9;
+        -webkit-appearance: none;
+        height: 7px;
+        width: 100%;
+      }
+
+      /* Below logic cannot be combined with commas. See for reference: https://css-tricks.com/sliding-nightmare-understanding-range-input/ */
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 31px;
+        width: 31px;
+        background: #17c690;
+        border-radius: 50%;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        -webkit-appearance: none;
+        height: 31px;
+        width: 31px;
+        background: #17c690;
+        border-radius: 50%;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border: 0;
+      }
+
+      input[type="range"]::-ms-thumb {
+        -webkit-appearance: none;
+        height: 31px;
+        width: 31px;
+        background: #17c690;
+        border-radius: 50%;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+
+      input[type="range"]::-webkit-slider-thumb:hover {
+        cursor: pointer;
+      }
+
+      input[type="range"]::-webkit-slider-thumb:active {
+        cursor: grabbing;
+      }
+
+      input[type="range"]::-moz-range-thumb:hover {
+        cursor: pointer;
+      }
+
+      input[type="range"]::-moz-range-thumb:active {
+        cursor: grabbing;
+      }
+
+      input[type="range"]::-ms-thumb:hover {
+        cursor: pointer;
+      }
+
+      input[type="range"]::-ms-thumb:active {
+        cursor: grabbing;
+      }
+
+      #bottom-container {
+        display: none;
+        overflow-x: hidden;
+      }
+
+      .global-container-width {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      #hero-container {
+        background: #17c690;
+        padding: 150px 140px 250px 100px;
+      }
+
+      #hero-container img {
+        max-width: 306px;
+        max-height: 332px;
+      }
+
+      #hero-content-wrapper {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+      }
+
+      #hero-text-container * {
+        color: white;
+      }
+
+      #hero-text-container h1 {
+        font-size: 64px;
+        font-weight: 600;
+        line-height: 40px;
+        white-space: nowrap;
+      }
+
+      #hero-text-container p {
+        max-width: 730px;
+        font-size: 32px;
+        font-weight: 300;
+        line-height: 48px;
+        margin-top: 74px;
+      }
+
+      @media (max-width: 1200px) {
+        #hero-container * {
+          white-space: normal !important;
+        }
+
+        #hero-container img {
+          position: relative;
+          top: 20px;
+          right: 0;
+        }
+
+        #hero-container h1 {
+          font-size: 50px;
+          font-weight: 600;
+          line-height: 55px;
+        }
+
+        #hero-container p {
+          max-width: 530px;
+          font-size: 22px;
+          line-height: 33px;
+        }
+      }
+
+      @media (max-width: 875px) {
+        #hero-container {
+          padding: 50px 26px 210px;
+        }
+
+        #hero-container img {
+          position: absolute;
+          top: 64px;
+          right: 20px;
+          width: 148px;
+          height: 160px;
+        }
+
+        #hero-container h1 {
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 40px;
+          white-space: nowrap !important;
+          margin-bottom: 0;
+        }
+
+        #hero-container p {
+          max-width: 210px;
+          font-size: 14px;
+          line-height: 21px;
+          margin-top: 30px;
+          margin-right: 130px;
+        }
+      }
+
+      #categories-section {
+        transform: translateY(-120px);
+        border-radius: 132px;
+        display: flex;
+        flex-direction: column;
+        padding: 104px 155px 0 120px;
+        background: white;
+        align-items: center;
+      }
+
+      .category-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: 76px;
+        max-width: 760px;
+        width: 100%;
+      }
+
+      .category-wrapper:first-child {
+        margin-top: 0;
+      }
+
+      .category-logo {
+        width: 70px;
+        height: 70px;
+      }
+
+      .category-title {
+        letter-spacing: 1px;
+        margin-bottom: 32px;
+      }
+
+      .category-bottom-container {
+        display: flex;
+        margin-top: 40px;
+      }
+
+      .slider-wrapper {
+        position: relative;
+        margin-left: 60px;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .slider-wrapper::before {
+        content: "0 min";
+        position: absolute;
+        left: 5px;
+        bottom: -4px;
+        font-size: 10px;
+        font-weight: 500;
+        color: #424242;
+      }
+
+      .slider-wrapper::after {
+        content: "12 h";
+        position: absolute;
+        right: 0;
+        bottom: -4px;
+        font-size: 10px;
+        font-weight: 500;
+        color: #424242;
+      }
+
+      .slider-tooltip {
+        position: absolute;
+        top: -6px;
+        left: 17px;
+        transform: translate(-50%, -50%);
+        width: 76px;
+        height: 25px;
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+        text-align: center;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 150%;
+        background: white;
+        padding-top: 2px;
+      }
+
+      .slider-tooltip::before {
+        position: absolute;
+        bottom: -17px;
+        left: 30px;
+        content: "";
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 14px solid #d9d9d9;
+        transform: rotate(270deg);
+      }
+
+      @media (max-width: 875px) {
+        #categories-section {
+          border-radius: 42px;
+          padding: 80px 24px 0;
+        }
+
+        #categories-section img {
+          max-width: 44px;
+          max-height: 43px;
+        }
+
+        .slider-wrapper {
+          margin-left: 28px;
+        }
+
+        .slider-tooltip {
+          top: -19px;
+        }
+
+        .slider-wrapper::before {
+          bottom: -20px;
+          left: 5px;
+          font-weight: 400;
+        }
+
+        .slider-wrapper::after {
+          bottom: -20px;
+          font-weight: 400;
+        }
+      }
+
+      #count-btn-wrapper {
+        max-width: 760px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      #count-btn {
+        background: #17c690;
+        border-radius: 50px;
+        border: 0;
+        padding: 22px 64px;
+        font-weight: 700;
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        width: 168px;
+        margin-top: 90px;
+      }
+
+      @media (max-width: 875px) {
+        #count-btn {
+          width: 92px;
+          height: 35px;
+          font-size: 12px;
+          line-height: 18px;
+          padding: 9px 28px;
+          margin-top: 50px;
+        }
+      }
+
+      #co2-summed-up-result-section {
+        background: #424242;
+        border-radius: 10px;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 110px 0;
+      }
+
+      #co2-summed-up-result-section p {
+        font-weight: 600;
+        font-size: 64px;
+        color: white;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      #co2-result {
+        opacity: 0;
+        color: #17c690 !important;
+        animation-name: fadeIn;
+        animation-duration: 2500ms;
+        animation-delay: 1000ms;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-out;
+        margin-top: 12px;
+      }
+
+      @media (max-width: 1200px) {
+        #co2-summed-up-result-section p {
+          font-size: 50px;
+        }
+      }
+
+      @media (max-width: 875px) {
+        #co2-summed-up-result-section p {
+          font-size: 24px;
+          line-height: 40px;
+        }
+
+        #co2-summed-up-result-section {
+          padding: 30px 24px;
+          border-radius: 0;
+        }
+      }
+
+      #carbon-footprint-section {
+        background: #17c690;
+        padding: 68px 114px 100px 100px;
+        border-radius: 132px;
+      }
+
+      #carbon-footprint-section hr {
+        width: 100px;
+        height: 4px;
+        background: white;
+        border: 0;
+        margin: 0 auto;
+      }
+
+      #carbon-footprint-section p {
+        margin-top: 40px;
+        line-height: 25px;
+        font-size: 19px;
+        color: white;
+        font-weight: 400;
+      }
+
+      #carbon-footprint-section p:nth-of-type(2) {
+        margin-top: 24px;
+      }
+
+      #carbon-footprint-container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      #trees-number-header {
+        text-align: center;
+        line-height: 48px;
+        font-size: 32px;
+        color: white;
+        margin-top: 40px;
+      }
+
+      #trees-number-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-top: 40px;
+      }
+
+      #trees-number-wrapper img {
+        max-width: 393px;
+      }
+
+      #trees-number {
+        font-size: 128px;
+        color: white;
+        line-height: 192px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 1200px) {
+        #carbon-footprint-container {
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        #carbon-footprint-container img {
+          max-width: 295px;
+          align-self: center;
+          margin-top: 50px;
+        }
+      }
+
+      @media (max-width: 875px) {
+        #carbon-footprint-section {
+          border-radius: 42px;
+          padding: 42px 24px;
+        }
+
+        #carbon-footprint-container p {
+          font-size: 14px;
+        }
+
+        #carbon-footprint-section hr {
+          margin: 0;
+        }
+
+        #trees-number-header {
+          line-height: 30px;
+          font-size: 20px;
+          margin: 36px auto 0;
+          max-width: 312px;
+        }
+
+        #trees-number-wrapper {
+          margin-top: 40px;
+        }
+
+        #trees-number-wrapper img {
+          width: 136px;
+          margin-top: 0;
+        }
+
+        #trees-number {
+          font-size: 64px;
+          line-height: 96px;
+        }
+      }
+
+      #partners-logos-section {
+        background: #17c690;
+        width: 100vw;
+      }
+
+      #partners-logos-container {
+        width: 100%;
+        padding: 38px 120px 0 120px;
+        background-color: white;
+        border-bottom-left-radius: 132px;
+        border-bottom-right-radius: 132px;
+      }
+
+      #partners-logos-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+
+      #partners-logos-container img:first-child {
+        max-width: 248px;
+      }
+
+      #partners-logos-container img:nth-child(2) {
+        max-width: 377px;
+        transform: translateY(15px);
+      }
+
+      #partners-logos-container img:nth-child(3) {
+        max-width: 156px;
+        transform: translateY(-40px);
+        margin-right: 50px;
+      }
+
+      #partners-logos-container img:nth-child(4) {
+        max-width: 270px;
+        transform: translateY(10px);
+      }
+
+      @media (max-width: 1200px) {
+        #partners-logos-container img:first-child {
+          max-width: 148px;
+        }
+
+        #partners-logos-container img:nth-child(2) {
+          max-width: 277px;
+          transform: translateY(-3px);
+        }
+
+        #partners-logos-container img:nth-child(3) {
+          max-width: 68px;
+          transform: translateY(-14px);
+          margin-right: 50px;
+        }
+
+        #partners-logos-container img:nth-child(4) {
+          max-width: 170px;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 875px) {
+        #partners-logos-section {
+          display: flex;
+          justify-content: center;
+          background: white;
+          padding: 30px 24px;
+        }
+
+        #partners-logos-container {
+          max-width: 350px;
+          padding: 0;
+        }
+
+        #partners-logos-container img:first-child {
+          max-width: 65px;
+        }
+
+        #partners-logos-container img:nth-child(2) {
+          max-width: 99px;
+          transform: translateY(3px);
+        }
+
+        #partners-logos-container img:nth-child(3) {
+          max-width: 41px;
+          transform: translateY(-11px);
+          margin-right: 30px;
+        }
+
+        #partners-logos-container img:nth-child(4) {
+          max-width: 71px;
+          transform: translateY(2px);
+        }
+      }
+
+      #bubble-chart-container {
+        display: flex;
+        position: relative;
+      }
+
+      #bubble-chart-wrapper {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: -120px;
+        right: -90px;
+      }
+
+      .legend-circle {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        margin-right: 7px;
+      }
+
+      .legend-row {
+        display: flex;
+        align-items: center;
+        margin-top: 24px;
+        white-space: nowrap;
+      }
+
+      #bubble-chart-section {
+        padding: 80px 100px 20px;
+      }
+
+      #bubble-chart-section p {
+        line-height: 24px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-bottom: 64px;
+      }
+
+      @media (max-width: 875px) {
+        #bubble-chart-section {
+          padding: 16px 24px 52px;
+        }
+
+        #bubble-chart-wrapper {
+          transform: scale(1.2);
+          top: -20px;
+          right: 0;
+          margin-bottom: 40px;
+        }
+
+        #bubble-chart-container {
+          flex-direction: column-reverse;
+        }
+
+        #bubble-chart-section p {
+          font-size: 14px;
+        }
+      }
+    </style>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="text/javascript">
+      function e() {
+        // Application state
+        const slidersData = [
+          {
+            id: "rozmowa_przez_telefon",
+            sliderValue: 0,
+            gramsProducedPerHour: 0.586285714,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#9747FF",
+            circleTitle: "Rozmowa",
+          },
+
+          {
+            id: "komunikatory",
+            sliderValue: 0,
+            gramsProducedPerHour: 1.788512571,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#00CCFF",
+            circleTitle: "Komunikatory",
+          },
+          {
+            id: "gry",
+            sliderValue: 0,
+            gramsProducedPerHour: 7.525947086,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#FF7F00",
+            circleTitle: "Gry",
+          },
+          {
+            id: "instagram",
+            sliderValue: 0,
+            gramsProducedPerHour: 36.527292,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#FF5176",
+            circleTitle: "Instagram",
+          },
+          {
+            id: "tiktok",
+            sliderValue: 0,
+            gramsProducedPerHour: 288.6639806,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#000000",
+            circleTitle: "TikTok",
+          },
+          {
+            id: "youtube",
+            sliderValue: 0,
+            gramsProducedPerHour: 53.52104229,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#FF2424",
+            circleTitle: "YouTube",
+          },
+          {
+            id: "spotify",
+            sliderValue: 0,
+            gramsProducedPerHour: 18.36032229,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#00D954",
+            circleTitle: "Spotify",
+          },
+          {
+            id: "przegladarka",
+            sliderValue: 0,
+            gramsProducedPerHour: 16.48507886,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#FFC42B",
+            circleTitle: "Przeglądarka",
+          },
+          {
+            id: "netflix",
+            sliderValue: 0,
+            gramsProducedPerHour: 133.5269109,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#B90013",
+            circleTitle: "Netflix",
+          },
+          {
+            id: "facebook",
+            sliderValue: 0,
+            gramsProducedPerHour: 22.63199657,
+            getCalculatedCO2Value() {
+              return calculateCo2Value(
+                this.sliderValue,
+                this.gramsProducedPerHour
+              );
+            },
+            circleColor: "#176EE9",
+            circleTitle: "Facebook",
+          },
+        ];
+
+        // Copyright 2021 Observable, Inc.
+        // Released under the ISC license.
+        // https://observablehq.com/@d3/bubble-chart
+        function BubbleChart(
+          data,
+          {
+            name = ([x]) => x, // alias for label
+            label = name, // given d in data, returns text to display on the bubble
+            value = ([, y]) => y, // given d in data, returns a quantitative size
+            group, // given d in data, returns a categorical value for color
+            title, // given d in data, returns text to show on hover
+            link, // given a node d, its link (if any)
+            linkTarget = "_blank", // the target attribute for links, if any
+            width = 640, // outer width, in pixels
+            height = width, // outer height, in pixels
+            padding = 4, // padding between circles
+            margin = 0, // default margins
+            marginTop = margin, // top margin, in pixels
+            marginRight = margin, // right margin, in pixels
+            marginBottom = margin, // bottom margin, in pixels
+            marginLeft = margin, // left margin, in pixels
+            groups, // array of group names (the domain of the color scale)
+            colors, // an array of colors (for groups)
+            fill = "#ccc", // a static fill color, if no group channel is specified
+            fillOpacity = 1, // the fill opacity of the bubbles
+            stroke, // a static stroke around the bubbles
+            strokeWidth, // the stroke width around the bubbles, if any
+            strokeOpacity, // the stroke opacity around the bubbles, if any
+          } = {}
+        ) {
+          // Compute the values.
+          const D = d3.map(data, (d) => d);
+          const V = d3.map(data, value);
+          const G = group == null ? null : d3.map(data, group);
+          const I = d3.range(V.length).filter((i) => V[i] > 0);
+
+          // Unique the groups.
+          if (G && groups === undefined) groups = I.map((i) => G[i]);
+          groups = G && new d3.InternSet(groups);
+
+          // Construct scales.
+          const color = G && d3.scaleOrdinal(groups, colors);
+
+          // Compute labels and titles.
+          const L = label == null ? null : d3.map(data, label);
+          const T =
+            title === undefined
+              ? L
+              : title == null
+              ? null
+              : d3.map(data, title);
+
+          // Compute layout: create a 1-deep hierarchy, and pack it.
+          const root = d3
+            .pack()
+            .size([
+              width - marginLeft - marginRight,
+              height - marginTop - marginBottom,
+            ])
+            .padding(padding)(d3.hierarchy({ children: I }).sum((i) => V[i]));
+
+          const svg = d3
+            .create("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", [-marginLeft, -marginTop, width, height])
+            .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+            .attr("fill", "currentColor")
+            .attr("font-family", "sans-serif")
+            .attr("text-anchor", "middle");
+
+          const leaf = svg
+            .selectAll("a")
+            .data(root.leaves())
+            .join("a")
+            .attr(
+              "xlink:href",
+              link == null ? null : (d, i) => link(D[d.data], i, data)
+            )
+            .attr("target", link == null ? null : linkTarget)
+            .attr("transform", (d) => `translate(${d.x},${d.y})`);
+
+          // CIRCLES STYLES
+          leaf
+            .append("circle")
+            .attr("stroke", stroke)
+            .attr("stroke-width", strokeWidth)
+            .attr("stroke-opacity", strokeOpacity)
+            // USE COLOR FROM SLIDERS DATA OBJECT
+            .attr("fill", (_, circleIndex) => D[circleIndex].circleColor)
+            .attr("height", 500)
+            .attr("fill-opacity", fillOpacity)
+            .attr("r", (d) => d.r);
+
+          if (T) leaf.append("title").text((d) => T[d.data]);
+
+          // L - array of all labels (eg. "Netflix")
+          if (L) {
+            // A unique identifier for clip paths (to avoid conflicts).
+            const uid = `O-${Math.random().toString(16).slice(2)}`;
+
+            // Create array holding each circle's radius
+            const radiusesArr = [];
+
+            leaf
+              .append("clipPath")
+              .attr("id", (d) => `${uid}-clip-${d.data}`)
+              .append("circle")
+              .attr("r", (d) => {
+                // Append radiuses to array
+                radiusesArr.push(d.r);
+                return d.r;
+              });
+
+            // Duplicates are created because below in tspan styling
+            // there are two entries for each circle (label and grams amount)
+            const duplicateRadiuses = radiusesArr.flatMap((i) => [i, i]);
+            const isMobile = window.matchMedia("(max-width: 875px)").matches;
+            let index1 = 0;
+            let index2 = 0;
+
+            // TEXT INSIDE THE CIRCLE
+            leaf
+              .append("text")
+              .selectAll("tspan")
+              .data((d) => `${L[d.data]}`.split(/\n/g))
+              .join("tspan")
+              .attr("color", "white")
+              .attr("x", 0)
+              // Create vertical space between label and grams amount
+              .attr("y", (d, i, D) => {
+                if (i % 2 === 0) {
+                  return `${i - D.length / 2 + 0.85}em`;
+                }
+
+                return `${i - D.length / 2 + 1.1}em`;
+              })
+              .attr("fill-opacity", "1")
+              .text((text) => {
+                const textWithoutComma = text.replace(",", "");
+                return textWithoutComma;
+              })
+              .style("font-size", function (text, i) {
+                // Get current circle radius
+                const curRad = duplicateRadiuses[index1];
+
+                // Don't show any text
+                if (curRad < 27) {
+                  index1++;
+                  return "0px";
+                }
+
+                if (curRad < 37) {
+                  index1++;
+                  return isMobile ? "8px" : "9px";
+                }
+
+                if (curRad < 50) {
+                  index1++;
+                  return "11px";
+                }
+
+                // Default font size
+                index1++;
+                return isMobile ? "11px" : "14px";
+              });
+          }
+
+          return Object.assign(svg.node(), { scales: { color } });
+        }
+
+        const getFile = (id, calculatedCO2Value, circleColor, circleTitle) => ({
+          id: id,
+          value: calculatedCO2Value,
+          circleColor,
+          circleTitle,
+        });
+
+        const calculateBubblesDataAKAgetFiles = () => {
+          const files = [];
+          slidersData.forEach((slider) => {
+            const { id, circleColor, circleTitle } = slider;
+            const calculatedCO2Value = slider.getCalculatedCO2Value();
+
+            // Fill bubble chart legend values
+            const legendValue = document.getElementById(`${id}-legend`);
+            if (legendValue && calculatedCO2Value) {
+              legendValue.innerHTML = calculatedCO2Value;
+              legendValue.parentElement.parentElement.style.display = "flex";
+            } else {
+              legendValue.parentElement.parentElement.style.display = "none";
+            }
+
+            // Do not add zeroes
+            if (calculatedCO2Value) {
+              files.push(
+                getFile(id, calculatedCO2Value, circleColor, circleTitle)
+              );
+            }
+          });
+
+          return files;
+        };
+
+        let isFirstChartRender = true;
+
+        const renderBubbleChart = () => {
+          const files = calculateBubblesDataAKAgetFiles();
+          const isMobile = window.matchMedia("(max-width: 875px)").matches;
+
+          const chart = BubbleChart(files, {
+            label: (d) =>
+              [d.circleTitle, d.value.toLocaleString("en")]
+                .join("\n")
+                .concat(" g"),
+            value: (d) => d.value,
+            title: (d) => `${d.circleTitle}\n${d.value.toLocaleString("en")}`,
+            width: isMobile ? 300 : 860,
+            height: isMobile ? 300 : 700,
+            // CIRCLES SPACING
+            padding: isMobile ? 10 : 50,
+          });
+
+          if (isFirstChartRender) {
+            isFirstChartRender = false;
+            document.getElementById("bubble-chart-wrapper").appendChild(chart);
+          } else {
+            const previousBubbleChart = document.getElementById(
+              "bubble-chart-wrapper"
+            ).childNodes[0];
+
+            document
+              .getElementById("bubble-chart-wrapper")
+              .replaceChild(chart, previousBubbleChart);
+          }
+        };
+
+        const handleSliderChange = (sliderId, i) => (event) => {
+          const newValue = event.target.value;
+
+          // Write new slider value to slidersData global obj
+          slidersData[i].sliderValue = newValue;
+
+          setTooltipPositionAndValue(sliderId);
+        };
+
+        // Add event listeners to sliders
+        slidersData.forEach((sliderData, idx) => {
+          const { id: sliderId } = sliderData;
+          const $slider = document.getElementById(sliderId);
+
+          $slider?.addEventListener("input", handleSliderChange(sliderId, idx));
+        });
+
+        document.getElementById("count-btn")?.addEventListener("click", () => {
+          setTotalCO2AndTreesNumber();
+          renderBubbleChart();
+
+          const bottomContainer = document.getElementById("bottom-container");
+          bottomContainer.style.display = "block";
+          const element = document.getElementById(
+            "co2-summed-up-result-section"
+          );
+          element.scrollIntoView({ behavior: "smooth" });
+        });
+
+        // ALL FUNCTIONS
+        function setTotalCO2AndTreesNumber() {
+          const co2Result = document.getElementById("co2-result");
+          const totalCO2 = getTotalProducedCO2().toString();
+          co2Result.innerHTML = `${totalCO2}g CO2`;
+
+          const co2GramsConsumedPerDayByTree = 60.2739726;
+          const calculatedGramsConsumedByTree = Math.round(
+            totalCO2 / co2GramsConsumedPerDayByTree
+          );
+
+          const treesNumber = document.getElementById("trees-number");
+          treesNumber.innerHTML = calculatedGramsConsumedByTree;
+        }
+
+        function calculateCo2Value(minutes, gramsProducedPerHour) {
+          return Math.round((gramsProducedPerHour / 60) * minutes);
+        }
+
+        function getTotalProducedCO2() {
+          let sum = 0;
+
+          slidersData.forEach((sliderData) => {
+            sum = sum + sliderData.getCalculatedCO2Value();
+          });
+
+          return Math.round(sum);
+        }
+
+        // This function gets direct input range value
+        function timeConvertA(minutes) {
+          var hours = minutes / 60;
+          var flooredHours = Math.floor(hours);
+          var minutes = (hours - flooredHours) * 60;
+          var roundedMinutes = Math.round(minutes);
+          if (flooredHours) {
+            return flooredHours + " h " + roundedMinutes + " min";
+          } else {
+            return roundedMinutes + " min";
+          }
+        }
+
+        function setTooltipPositionAndValue(sliderId) {
+          const tooltip = document.getElementById(`${sliderId}-tooltip`);
+          const slider = document.getElementById(sliderId);
+
+          const newValue = Number(
+            ((parseInt(slider.value) - parseInt(slider.min)) * 100) /
+              (parseInt(slider.max) - parseInt(slider.min))
+          );
+          const newPosition = 10 - newValue * 0.4;
+
+          tooltip.innerHTML = timeConvertA(parseInt(slider.value));
+
+          if (newValue > 60) {
+            tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 11px))`;
+          } else if (newValue > 30) {
+            tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 9px))`;
+          } else {
+            tooltip.style.left = `calc(${newValue}% + (${newPosition}px + 7px))`;
+          }
+        }
+      }
+    </script>
     <title>CO2 Calculator</title>
   </head>
-  <body></body>
-</html>
 
-<html>
-  <body>
+  <!-- CHANGE THIS!! -->
+  <body onLoad="e()">
     <section id="hero-container">
       <div id="hero-content-wrapper" class="global-container-width">
         <div id="hero-text-container">
@@ -21,7 +1146,7 @@
             kotkami a ile, gdy dzwonisz do znajomych.
           </p>
         </div>
-        <img alt="" src="./assets/icons/icon_tree.svg" />
+        <img alt="" src="./assets/icons/icon_tree.png" />
       </div>
     </section>
 
@@ -32,7 +1157,7 @@
           <img
             alt=""
             class="category-logo"
-            src="./assets/icons/icon_telephone.svg"
+            src="./assets/icons/icon_telephone.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="rozmowa_przez_telefon-tooltip">
@@ -43,7 +1168,7 @@
               id="rozmowa_przez_telefon"
               class="slider"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -57,7 +1182,7 @@
           <img
             alt=""
             class="category-logo"
-            src="assets/icons/icon_communicators.svg"
+            src="assets/icons/icon_communicators.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="komunikatory-tooltip">0 min</div>
@@ -65,7 +1190,7 @@
               type="range"
               id="komunikatory"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -76,17 +1201,10 @@
       <div class="category-wrapper">
         <p class="category-title">Gry</p>
         <div class="category-bottom-container">
-          <img alt="" class="category-logo" src="assets/icons/icon_games.svg" />
+          <img alt="" class="category-logo" src="assets/icons/icon_games.png" />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="gry-tooltip">0 min</div>
-            <input
-              type="range"
-              id="gry"
-              min="0"
-              max="1440"
-              step="5"
-              value="0"
-            />
+            <input type="range" id="gry" min="0" max="720" step="5" value="0" />
           </div>
         </div>
       </div>
@@ -97,7 +1215,7 @@
           <img
             alt=""
             class="category-logo"
-            src="assets/icons/icon_instagram.svg"
+            src="assets/icons/icon_instagram.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="instagram-tooltip">0 min</div>
@@ -105,7 +1223,7 @@
               type="range"
               id="instagram"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -116,14 +1234,14 @@
       <div class="category-wrapper">
         <p class="category-title">Facebook</p>
         <div class="category-bottom-container">
-          <img alt="" class="category-logo" src="assets/icons/icon_fb.svg" />
+          <img alt="" class="category-logo" src="assets/icons/icon_fb.png" />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="facebook-tooltip">0 min</div>
             <input
               type="range"
               id="facebook"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -137,7 +1255,7 @@
           <img
             alt=""
             class="category-logo"
-            src="assets/icons/icon_tiktok.svg"
+            src="assets/icons/icon_tiktok.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="tiktok-tooltip">0 min</div>
@@ -145,7 +1263,7 @@
               type="range"
               id="tiktok"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -159,7 +1277,7 @@
           <img
             alt=""
             class="category-logo"
-            src="assets/icons/icon_netflix.svg"
+            src="assets/icons/icon_netflix.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="netflix-tooltip">0 min</div>
@@ -167,7 +1285,7 @@
               type="range"
               id="netflix"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -178,14 +1296,14 @@
       <div class="category-wrapper">
         <p class="category-title">YouTube</p>
         <div class="category-bottom-container">
-          <img alt="" class="category-logo" src="assets/icons/icon_yt.svg" />
+          <img alt="" class="category-logo" src="assets/icons/icon_yt.png" />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="youtube-tooltip">0 min</div>
             <input
               type="range"
               id="youtube"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -199,7 +1317,7 @@
           <img
             alt=""
             class="category-logo"
-            src="assets/icons/icon_spotify.svg"
+            src="assets/icons/icon_spotify.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="spotify-tooltip">0 min</div>
@@ -207,7 +1325,7 @@
               type="range"
               id="spotify"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -221,7 +1339,7 @@
           <img
             alt=""
             class="category-logo"
-            src="assets/icons/icon_browser.svg"
+            src="assets/icons/icon_browser.png"
           />
           <div class="slider-wrapper">
             <div class="slider-tooltip" id="przegladarka-tooltip">0 min</div>
@@ -229,7 +1347,7 @@
               type="range"
               id="przegladarka"
               min="0"
-              max="1440"
+              max="720"
               step="5"
               value="0"
             />
@@ -237,7 +1355,9 @@
         </div>
       </div>
 
-      <button id="count-btn">oblicz</button>
+      <div id="count-btn-wrapper">
+        <button id="count-btn">oblicz</button>
+      </div>
     </section>
 
     <div id="bottom-container">
@@ -247,8 +1367,95 @@
       </section>
 
       <section id="bubble-chart-section">
-        <p>Twoje wyniki</p>
-        <div id="bubble-chart-container"></div>
+        <div class="global-container-width">
+          <p>Twoje wyniki</p>
+
+          <div id="bubble-chart-container">
+            <div id="bubble-chart-legend">
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #9747ff"></div>
+                <div>
+                  Rozmowa przez telefon -
+                  <span id="rozmowa_przez_telefon-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #00ccff"></div>
+                <div>
+                  Komunikatory -
+                  <span id="komunikatory-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ff7f00"></div>
+                <div>
+                  Granie -
+                  <span id="gry-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ff5176"></div>
+                <div>
+                  Instagram -
+                  <span id="instagram-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #176ee9"></div>
+                <div>
+                  Facebook -
+                  <span id="facebook-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #000000"></div>
+                <div>
+                  TikTok -
+                  <span id="tiktok-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #b90013"></div>
+                <div>
+                  Netflix -
+                  <span id="netflix-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ff0000"></div>
+                <div>
+                  YouTube -
+                  <span id="youtube-legend">23</span> g CO2
+                </div>
+              </div>
+
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #00d954"></div>
+                <div>
+                  Spotify -
+                  <span id="spotify-legend">23</span> g CO2
+                </div>
+              </div>
+              <div class="legend-row">
+                <div class="legend-circle" style="background: #ffc42b"></div>
+                <div>
+                  Przeglądarka -
+                  <span id="przegladarka-legend">23</span> g CO2
+                </div>
+              </div>
+              <!--  -->
+            </div>
+
+            <div id="bubble-chart-wrapper"></div>
+          </div>
+        </div>
       </section>
 
       <section id="carbon-footprint-section">
@@ -256,22 +1463,30 @@
           <div id="carbon-footprint-paragraphs">
             <hr />
             <p>
-              Ślad węglowy jest częścią śladu środowiskowego - mówi nam o ilości
-              gazów cieplarnianych wyemitowanych do atmosfery na skutek
+              Co to jest ŚLAD WĘGLOWY? To część śladu środowiskowego - mówi nam
+              o ilości gazów cieplarnianych wyemitowanych do atmosfery na skutek
               działalności człowieka (w tym wypadku korzystania z telefonu),
               które przyczyniają się do globalnego ocieplenia. Dla przykładu -
-              oglądanie godzinnego filmu na Netflixie emituje tyle gazów
-              cieplarnianych, co dwa drzewa są w stanie pochłonąć w ciągu 24
-              godzin.
+              oglądając przez godzinę film na Netflixie emitujemy 140 gramów
+              gazów cieplarnianych - to tyle, ile dwa drzewa są w stanie
+              pochłonąć w ciągu 24 godzin. Gdyby każdy z nas codziennie emitował
+              tyle gramów gazów cieplarnianych używając telefonu to w sumie
+              dałoby to 0,65% rocznych emisji Polski.
             </p>
             <p>
-              Takie działanie w skali roku będzie odpowiadało za 0,65% rocznych
-              emisji przypisywanych mieszkańcom naszego kraju. Więcej informacji
-              można znaleźć w opisie kalkulatora, który można znaleźć tutaj.
+              Dane do kalkulatora opracowane zostały na podstawie badań i
+              researchu latem 2022. Szczegółowy raport można znaleźć tutaj
+              (link).
             </p>
           </div>
 
-          <img alt="" src="./assets/icons/icon_tree1.svg" />
+          <h2 id="trees-number-header">
+            Żeby zrównoważyć Twój ślad węglowy potrzeba dziennie:
+          </h2>
+          <div id="trees-number-wrapper">
+            <div id="trees-number">40</div>
+            <img alt="" src="./assets/icons/icon_trees_number.png" />
+          </div>
         </div>
       </section>
 
@@ -286,7 +1501,5 @@
         </div>
       </section>
     </div>
-
-    <script type="text/javascript" src="init.ts"></script>
   </body>
 </html>
